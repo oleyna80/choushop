@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff8fb;
+  --foreground: #2f2441;
+  --muted: #7b708d;
+  --line: #efddea;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-soft: rgba(255, 244, 250, 0.88);
+  --accent: #ff5fa2;
+  --accent-strong: #ff3f8f;
+  --lavender: #d8c9ff;
+  --peach: #ffd8ca;
+  --mint: #d7f4ea;
+  --warning: #f59f5b;
+  --success: #4bb889;
+
+  --font-display: var(--font-sora), "Sora", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+
+  --text-display: clamp(2.85rem, 7vw, 5.5rem);
+  --text-h1: clamp(2.35rem, 5vw, 4.25rem);
+  --text-h2: clamp(1.85rem, 4vw, 3.2rem);
+  --text-h3: clamp(1.35rem, 2.5vw, 2rem);
+  --text-body: 1rem;
+  --text-caption: 0.875rem;
+
+  --space-section: clamp(4.5rem, 8vw, 7.5rem);
+  --space-section-tight: clamp(3rem, 6vw, 5rem);
+  --space-container: clamp(1rem, 2vw, 1.75rem);
+  --space-stack: clamp(1rem, 2vw, 1.5rem);
+  --space-inset: clamp(1.15rem, 2vw, 1.5rem);
+
+  --radius-sm: 1rem;
+  --radius-md: 1.4rem;
+  --radius-lg: 1.8rem;
+  --radius-xl: 2.4rem;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 16px 40px rgba(219, 126, 173, 0.14);
+  --shadow-raised: 0 20px 60px rgba(181, 109, 170, 0.2);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 24px 70px rgba(255, 114, 165, 0.16);
+
+  --duration-fast: 180ms;
+  --duration-base: 280ms;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --container-max: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 215, 230, 0.72), transparent 34%),
+    radial-gradient(circle at top right, rgba(216, 201, 255, 0.5), transparent 28%),
+    linear-gradient(180deg, #fff9fc 0%, #fff6fb 48%, #fffdfc 100%);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(255, 95, 162, 0.18);
+  color: var(--foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100svh;
+}
+
+.page-shell::before {
+  content: "";
+  position: fixed;
+  inset: auto auto 6vh -4vw;
+  z-index: -1;
+  height: 12rem;
+  width: 12rem;
+  border-radius: 999px;
+  background: rgba(255, 191, 218, 0.28);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.container {
+  width: min(var(--container-max), calc(100% - (var(--space-container) * 2)));
+  margin-inline: auto;
+}
+
+.section-shell {
+  padding-block: var(--space-section);
+}
+
+.section-shell[data-density="tight"] {
+  padding-block: var(--space-section-tight);
+}
+
+.section-heading {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 42rem;
+}
+
+.surface-panel {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid rgba(255, 95, 162, 0.28);
+  outline-offset: 3px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2rem;
+  width: fit-content;
+  padding-inline: 0.8rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--accent-strong);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.glow-orb[data-tone="accent"] {
+  background: rgba(255, 95, 162, 0.18);
+}
+
+.glow-orb[data-tone="lavender"] {
+  background: rgba(216, 201, 255, 0.28);
+}
+
+.glow-orb[data-tone="mint"] {
+  background: rgba(215, 244, 234, 0.42);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  input,
+  select {
+    transition:
+      color var(--duration-fast) var(--ease-soft),
+      background-color var(--duration-fast) var(--ease-soft),
+      border-color var(--duration-fast) var(--ease-soft),
+      transform var(--duration-fast) var(--ease-soft),
+      box-shadow var(--duration-fast) var(--ease-soft),
+      opacity var(--duration-fast) var(--ease-soft);
+  }
+}

@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Production/build output
+dist/
+build/
+
+# Generated files
+src/generated/prisma/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+.env.production.local
+!.env.example
+!.env*.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+logs/
+
+# Tests and coverage
+coverage/
+.nyc_output/
+
+# Caches
+.turbo/
+.cache/
+
+# Deploy tooling
+.vercel/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local agent/private config
+.codex/
+
+# Private keys / local credentials
+*.pem
+*.key
+id_rsa
+id_ed25519

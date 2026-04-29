@@ -1,0 +1,232 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProductType {
+  FIXED_BOX
+  THEME_BOX
+  LIMITED_BOX
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum ShippingZone {
+  FR
+  EU
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum FulfillmentStatus {
+  UNFULFILLED
+  PROCESSING
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  ON_HOLD
+}
+
+enum ShipmentStatus {
+  CREATED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum EventStatus {
+  PENDING
+  PROCESSED
+  FAILED
+}
+
+enum AdminRole {
+  OWNER
+  ADMIN
+  OPERATOR
+}
+
+model Product {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  title            String
+  shortDescription String
+  description      String
+  type             ProductType
+  theme            String?
+  price            Int
+  compareAtPrice   Int?
+  currency         String        @default("EUR")
+  taxRate          Int           @default(2000)
+  status           ProductStatus @default(DRAFT)
+  featured         Boolean       @default(false)
+  stock            Int           @default(0)
+  sku              String?       @unique
+  weight           Int?
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  images     ProductImage[]
+  orderItems OrderItem[]
+
+  @@index([status, featured])
+  @@index([type])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  url       String
+  alt       String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, sortOrder])
+}
+
+model ShippingMethod {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  price       Int
+  currency    String       @default("EUR")
+  zone        ShippingZone
+  countries   String[]     @db.Text
+  isActive    Boolean      @default(true)
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  orders Order[]
+
+  @@index([zone, isActive, sortOrder])
+}
+
+model Order {
+  id                      String            @id @default(cuid())
+  orderNumber             String            @unique
+  cartId                  String
+  customerEmail           String
+  customerName            String
+  phone                   String?
+  shippingAddressJson     Json
+  billingAddressJson      Json?
+  paymentStatus           PaymentStatus     @default(PENDING)
+  fulfillmentStatus       FulfillmentStatus @default(UNFULFILLED)
+  currency                String            @default("EUR")
+  subtotal                Int
+  shippingAmount          Int
+  taxAmount               Int
+  taxRateSnapshot         Int
+  discountCode            String?
+  discountAmount          Int               @default(0)
+  totalAmount             Int
+  shippingMethodId        String?
+  stripeCheckoutSessionId String?           @unique
+  stripePaymentIntentId   String?
+  checkoutExpiresAt       DateTime?
+  invalidatedAt           DateTime?
+  termsAcceptedAt         DateTime
+  termsVersion            String
+  stockIssue              Boolean           @default(false)
+  stockIssueReason        String?
+  notes                   String?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+
+  items          OrderItem[]
+  shipment       Shipment?
+  shippingMethod ShippingMethod? @relation(fields: [shippingMethodId], references: [id])
+
+  @@index([cartId, paymentStatus, invalidatedAt])
+  @@index([customerEmail])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id                   String   @id @default(cuid())
+  orderId              String
+  productId            String?
+  productTitleSnapshot String
+  productImageSnapshot String?
+  unitPrice            Int
+  quantity             Int
+  totalPrice           Int
+  taxRateSnapshot      Int
+  createdAt            DateTime @default(now())
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Shipment {
+  id             String         @id @default(cuid())
+  orderId        String         @unique
+  status         ShipmentStatus @default(CREATED)
+  carrier        String?
+  method         String?
+  trackingNumber String?
+  trackingUrl    String?
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model EventLog {
+  id         String      @id @default(cuid())
+  eventType  String
+  entityType String
+  entityId   String
+  payloadJson Json
+  source     String
+  status     EventStatus @default(PENDING)
+  createdAt  DateTime    @default(now())
+
+  @@index([eventType, createdAt])
+  @@index([entityType, entityId])
+}
+
+model WebhookEvent {
+  id            String   @id @default(cuid())
+  provider      String
+  providerEventId String @unique
+  eventType     String
+  processedAt   DateTime?
+  payloadJson   Json
+  createdAt     DateTime @default(now())
+
+  @@index([provider, eventType])
+}
+
+model AdminUser {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  role        AdminRole @default(ADMIN)
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
