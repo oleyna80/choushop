@@ -2,6 +2,63 @@
 
 ## Session Update - 2026-04-29
 
+Stage: Orchestrator Prompt Templates.
+Role: Coder.
+Status: documentation update completed.
+
+What changed:
+
+- Created `docs/dev/orchestrator-prompts.md` with reusable prompts for orchestration start, planning swarm, single Coder implementation, review swarm, fix stage, verification, and commit gate.
+- Added the reusable orchestration prompt reference to `AGENTS.md`.
+- Kept the work documentation-only; no production code was changed.
+
+Next recommended action:
+
+- Stage: Orchestrator Prompt Templates verification.
+- Objective: confirm the prompt templates and AGENTS reference match the requested Agentic Development Lifecycle workflow.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-29
+
+Stage: Agentic Development Lifecycle Documentation.
+Role: Coder.
+Status: documentation update completed.
+
+What changed:
+
+- Added the Agentic Development Lifecycle section to `docs/agent-team-principles.md`.
+- Added the required non-trivial work lifecycle reference to `AGENTS.md`.
+- Kept the work documentation-only; no production code was changed.
+
+Next recommended action:
+
+- Stage: Agentic Development Lifecycle Documentation verification.
+- Objective: confirm the lifecycle section and AGENTS reference match the requested rules.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-29
+
+Stage: Swarm Workflow Documentation.
+Role: Coder.
+Status: documentation update completed.
+
+What changed:
+
+- Added controlled Codex swarm workflow rules to `docs/agent-team-principles.md`.
+- Added the required swarm workflow reference to `AGENTS.md`.
+- Kept the work documentation-only; no production code was changed.
+
+Next recommended action:
+
+- Stage: Swarm Workflow Documentation verification.
+- Objective: confirm the swarm workflow section and AGENTS reference match the requested rules.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-29
+
 Stage: GitHub Repository Setup.
 Role: Coder.
 Status: repository safety setup prepared for initial commit.

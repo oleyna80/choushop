@@ -27,6 +27,9 @@ Payments: Stripe Checkout only.
 Default mode for project work: multi-agent orchestration.
 
 Multi-agent workflow must follow `docs/agent-team-principles.md`.
+Complex tasks may use a controlled Codex swarm as defined in `docs/agent-team-principles.md`.
+For non-trivial work, use the Agentic Development Lifecycle in `docs/agent-team-principles.md`.
+Reusable orchestration prompts live in docs/dev/orchestrator-prompts.md.
 
 The orchestrator must:
 
