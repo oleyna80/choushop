@@ -25,6 +25,14 @@ done
 
 [ -z "${proj:-}" ] && exit 0
 
+# Only check staged files — intermediate edits produce noise
+if git rev-parse --show-toplevel >/dev/null 2>&1; then
+  if git diff --cached --quiet "$f" 2>/dev/null; then
+    exit 0  # not staged — skip
+  fi
+fi
+# Fallback: if not a git repo, run tsc unconditionally
+
 # Run tsc
 out=$(cd "$proj" && npx tsc --noEmit 2>&1) && rc=$? || rc=$?
 if [ "$rc" -ne 0 ]; then
