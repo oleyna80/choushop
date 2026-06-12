@@ -25,9 +25,12 @@ done
 
 [ -z "${proj:-}" ] && exit 0
 
-# Only check staged files — intermediate edits produce noise
+# Only check staged files — intermediate edits produce noise.
+# git status --porcelain returns [AMRC] in first column for staged files:
+# A=added, M=modified, R=renamed, C=copied
 if git rev-parse --show-toplevel >/dev/null 2>&1; then
-  if git diff --cached --quiet "$f" 2>/dev/null; then
+  status=$(git status --porcelain "$f" 2>/dev/null || echo "")
+  if [[ ! "$status" =~ ^[AMRC] ]]; then
     exit 0  # not staged — skip
   fi
 fi
