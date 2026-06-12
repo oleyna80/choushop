@@ -12,10 +12,12 @@
 | Control Tower | `choushop-control-tower` | Orchestration, planning, task slicing, SSOT | task-decomposition, ssot-sync-closeout, memory-bank-manager, subagent-mission-brief |
 | Solution Architect | `choushop-solution-architect` | Pre-implementation research (read-only) | architecture-discovery, technical-discovery, project-estimation |
 | Critic | `choushop-critic` | Independent review of Control Tower decisions, Stage 0→1 (read-only) | critic-review |
+| GPT Critic | `choushop-gpt-critic` | External adversarial review of decisions (GPT model family, read-only) | codex-verification, critic-review |
 | Scoped Coder | `choushop-scoped-coder` | Approved-scope implementation only | scoped-coder, scoped-commit-guard, shell-context-guard |
 | Reviewer | `choushop-reviewer` | Read-only multi-dimension review | reviewer, security-audit-triage |
 | Verifier | `choushop-verifier` | AC verification gate (read-only) | verifier, security-verification-gate, systematic-debugging |
-| Codex Reviewer | `choushop-codex-reviewer` | External adversarial review (GPT model family, read-only) | codex-verification |
+| GPT Verifier | `choushop-gpt-verifier` | External adversarial verification (GPT model family, read-only) | codex-verification, verifier |
+| Codex Reviewer | `choushop-codex-reviewer` | External adversarial code review (GPT model family, read-only) | codex-verification |
 
 ## Analysis Specializations
 

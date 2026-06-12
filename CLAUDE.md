@@ -41,6 +41,14 @@ This project uses the Agentic SDLC Framework. See `AGENTS.md` for the full contr
 solution-architect → verifier (skill) → Plan mode → critic → Implement → verifier (agent)
 ```
 
+**Dual-model QC (Full tier / high-risk):**
+```
+critic (Claude) ──→  gpt-critic (GPT via MCP)   ──→ merge → Control Tower
+verifier (Claude) ──→ gpt-verifier (GPT via MCP) ──→ merge → consolidation
+```
+
+**GPT agents:** `.claude/agents/gpt-critic.md`, `.claude/agents/gpt-verifier.md`
+
 **Solution-architect triggers** — must run BEFORE Plan mode when:
 - New service layer (new file in `src/server/services/` or `src/lib/`)
 - New DB model or schema change
