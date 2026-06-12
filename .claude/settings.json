@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/hard-stop.sh",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/typecheck.sh",
+            "timeout": 30000
+          }
+        ]
+      }
+    ]
+  },
+  "agents": {
+    "solution-architect": {
+      "description": "Pre-implementation research (read-only)",
+      "color": "green"
+    },
+    "critic": {
+      "description": "Independent review of Control Tower decisions, Stage 0→1 (read-only)",
+      "color": "yellow"
+    },
+    "verifier": {
+      "description": "Post-implementation verification gate (read-only)",
+      "color": "red"
+    }
+  }
+}

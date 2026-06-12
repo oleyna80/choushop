@@ -48,6 +48,14 @@ coverage/
 
 # Local agent/private config
 .codex/
+memory_bank/
+.claude/agent-memory/
+
+# Agent/development workflow docs are synchronized through Git by default.
+# Keep only private runtime artifacts, secrets, and machine-specific state out
+# of the repository.
+!docs/public/
+!docs/public/**
 
 # Private keys / local credentials
 *.pem

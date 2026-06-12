@@ -1,13 +1,18 @@
-import { sampleProducts } from "@/features/catalog/sample-products";
+import type { StorefrontProduct } from "@/features/catalog/storefront-types";
 import { HomeCollectionsSection } from "@/features/home/home-collections-section";
 import { HomeExperienceSection } from "@/features/home/home-experience-section";
 import { HomeFeaturedProductsSection } from "@/features/home/home-featured-products-section";
 import { HomeFinalCta } from "@/features/home/home-final-cta";
 import { HomeHero } from "@/features/home/home-hero";
 
-export function HomePageView() {
-  const featuredProducts = sampleProducts.filter((product) => product.featured);
-  const heroProduct = featuredProducts[0] ?? sampleProducts[0];
+interface Props {
+  products: StorefrontProduct[];
+}
+
+export function HomePageView({ products }: Props) {
+  const fallback = products;
+  const featuredProducts = fallback.filter((product) => product.featured);
+  const heroProduct = featuredProducts[0] ?? fallback[0];
   const otherFeatured = featuredProducts.slice(1);
   const secondaryProducts = otherFeatured.slice(0, 2);
   const spotlightProduct = featuredProducts.at(-1) ?? heroProduct;

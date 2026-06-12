@@ -1,5 +1,90 @@
 # Active Context
 
+## Session Update - 2026-04-30
+
+Stage: Agentic SDLC Consistency Fix.
+Role: Coder.
+Status: documentation-only consistency wording fixes applied.
+
+What changed:
+
+- Replaced the old default project mode wording with lightest-safe-workflow selection.
+- Added compact workflow selection guidance for Small Task Path, Standard Workflow, Agentic Workflow, and Autonomous Execution Mode.
+- Clarified that Tech Lead / Planner is a planning function, not an execution role.
+- Clarified that Documentation First is read-only by default unless documentation changes are inside approved scope.
+- Added Autonomous Execution Mode dirty-state baseline rules.
+- Added stable review finding IDs and Fix Stage mapping rules.
+- Kept the work documentation-only; no production code, package files, configs, secrets, environment files, build files, staging, commit, or push changes were made.
+
+Next recommended action:
+
+- Stage: Agentic SDLC Consistency Fix verification.
+- Objective: verify the wording fixes against `AGENTS.md`, `docs/agent-team-principles.md`, `docs/dev/orchestrator-prompts.md`, git status, and production-code safety.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-30
+
+Stage: Autonomous Execution Mode Test.
+Role: Coder.
+Status: documentation-only clarification applied.
+
+What changed:
+
+- Clarified that small documentation-only tasks may use Autonomous Execution Mode as a workflow rehearsal only when the Owner explicitly approves the autonomous plan, scope, stages, stop conditions, and verification rules.
+- Mirrored the clarification in the reusable Autonomous Execution Plan prompt.
+- Kept the work documentation-only; no production code, package files, configs, secrets, environment files, build files, staging, commit, or push changes were made.
+
+Next recommended action:
+
+- Stage: Autonomous Execution Mode Test verification.
+- Objective: verify the clarification against `AGENTS.md`, `docs/agent-team-principles.md`, `docs/dev/orchestrator-prompts.md`, git status, and production-code safety.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-30
+
+Stage: Autonomous Execution Mode Documentation.
+Role: Coder.
+Status: documentation update completed.
+
+What changed:
+
+- Added Autonomous Execution Mode to `docs/agent-team-principles.md` as a safe execution mode inside an Owner-approved Agentic Development Lifecycle plan.
+- Defined preconditions, allowed autonomous actions, mandatory stop conditions, progress reporting, commit/push boundaries, and Small Task Path compatibility.
+- Added an Autonomous Execution Plan template to `docs/dev/orchestrator-prompts.md`.
+- Added the short Autonomous Execution Mode reference to `AGENTS.md`.
+- Kept the work documentation-only; no production code, package files, configs, secrets, environment files, build files, staging, commit, or push changes were made.
+
+Next recommended action:
+
+- Stage: Autonomous Execution Mode Documentation verification.
+- Objective: verify the new autonomous execution rules against AGENTS.md, agent-team-principles, orchestrator prompts, git status, and production-code safety.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
+## Session Update - 2026-04-30
+
+Stage: Documentation Consistency Review - Phase 2.
+Role: Coder.
+Status: documentation-only consistency fixes applied.
+
+What changed:
+
+- Clarified that the Standard Workflow remains the default for small and normal tasks.
+- Clarified that the Agentic Workflow extends the existing AGENTS, skills, progress, roadmap, memory-bank, and plan -> spec -> review -> verification system instead of replacing it.
+- Aligned orchestrator prompts with approval gates, read-only phases, scoped subagents, scoped explorer fallback, git safety, and single-Coder implementation rules.
+- Updated design workflow docs so Figma is preferred when available but not the only valid design reference.
+- Clarified that draft design references are not automatically approved for implementation.
+- Kept the work documentation-only; no production code, secrets, config, staging, commit, or push changes were made.
+
+Next recommended action:
+
+- Stage: Documentation Consistency Review - Phase 3.
+- Objective: verify the documentation consistency fixes against AGENTS.md, workflow docs, design docs, git status, and risky-file rules.
+- Role: Verifier.
+- Expected result: read-only verification report.
+
 ## Session Update - 2026-04-29
 
 Stage: Orchestrator Prompt Templates.

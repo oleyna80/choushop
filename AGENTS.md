@@ -24,12 +24,39 @@ Payments: Stripe Checkout only.
 
 ## Operating Mode
 
-Default mode for project work: multi-agent orchestration.
+Default mode: the Orchestrator selects the lightest safe workflow.
 
 Multi-agent workflow must follow `docs/agent-team-principles.md`.
 Complex tasks may use a controlled Codex swarm as defined in `docs/agent-team-principles.md`.
 For non-trivial work, use the Agentic Development Lifecycle in `docs/agent-team-principles.md`.
-Reusable orchestration prompts live in docs/dev/orchestrator-prompts.md.
+Long approved work may use Autonomous Execution Mode as defined in `docs/agent-team-principles.md`.
+Reusable orchestration prompts live in `docs/dev/orchestrator-prompts.md`.
+
+The project supports these workflow paths:
+
+- Standard Workflow: default for small and normal tasks, using Plan -> Spec -> Implementation -> Review -> Verification.
+- Agentic Workflow: for non-trivial, risky, multi-domain, architectural, design, security, migration, or production-impacting work, using Orchestrator -> read-only subagents -> consolidated plan -> approval gate -> single Coder -> review swarm -> verification.
+
+Workflow selection:
+
+| Task type | Workflow |
+| --- | --- |
+| Trivial task | Small Task Path |
+| Small or normal task | Standard Workflow |
+| Risky, multi-domain, architectural, security, design, migration, or production-impacting task | Agentic Workflow |
+| Long Owner-approved plan | Autonomous Execution Mode |
+
+The Agentic Workflow extends the existing project system. It does not replace AGENTS.md, skills, progress or roadmap documents when present, memory-bank continuity, or the standard plan/spec/review/verification process.
+
+Autonomous Execution Mode may be used inside an Owner-approved Agentic Workflow plan. It allows the agent to continue through approved stages without repeated confirmation, but the agent must stop for approval gates, blockers, scope changes, risky operations, unrelated or blocker dirty files, failed checks, or failed verification.
+
+Before Autonomous Execution Mode starts, check git status and classify existing dirty files as approved context, unrelated, or blocker. Proceed only when dirty files are approved context or explicitly accepted by the Owner. Stop if unrelated or blocker dirty files could be overwritten or confused with agent changes.
+
+Small Task Path:
+
+- no full swarm or full Agentic Lifecycle is required for trivial tasks;
+- still follow scope, git safety, no-secrets rules, and report changed files, checks, and risks;
+- examples include small text edits, README or documentation typo fixes, simple CSS tweaks, obvious bugfixes, and minor copy updates.
 
 The orchestrator must:
 
@@ -38,15 +65,22 @@ The orchestrator must:
 - state selected role;
 - state expected result;
 - keep roles separate in each step;
+- assign read-only scoped subagents within the approved objective when operating as Orchestrator;
 - use subagents only when they materially help and the task is scoped;
 - not spawn subagents for small single-thread documentation updates;
-- ask for confirmation before moving to a new implementation stage.
+- use scoped explorer tasks as a fallback if native subagent or fork workflow is unavailable;
+- give each subagent or scoped explorer a role, scope, out of scope, expected output, and file-change permission;
+- require explicit approved implementation scope before using any write-capable subagent;
+- ask for confirmation before moving to a new implementation stage unless operating inside an approved Autonomous Execution Mode plan.
 
 Allowed roles:
 
+- Orchestrator: coordination, planning, consolidation, handoff, and role selection.
 - Reviewer: read-only analysis and risk review.
 - Coder: scoped file changes only.
 - Verifier: checks against goals and acceptance criteria.
+
+Execution roles are Orchestrator, Coder, Reviewer, and Verifier. Specialized read-only subagents such as Product Analyst, Architecture Analyst, Frontend Analyst, Backend Analyst, Design Analyst, Security Analyst, QA Analyst, and Docs Analyst are allowed when scoped; they do not conflict with the execution roles.
 
 ## Memory Bank
 
@@ -67,11 +101,26 @@ Update `memory-bank/progress.md` whenever feature status changes.
 Update `memory-bank/decisionLog.md` when an architecture or product decision changes.
 Update `memory-bank/openQuestions.md` when a blocker is found or resolved.
 
+Read-only phases must not update memory-bank files. If these instructions would normally require a memory-bank update, report that it was skipped because the phase is read-only and propose the update for an approved documentation or fix stage.
+
+## Repository Safety
+
+- Before Coder or Fix stages, check git status.
+- Any repository file change requires approved scope.
+- Do not modify unrelated dirty files.
+- Do not stage, commit, or push without Owner approval.
+- Do not commit `.env` files, credentials, tokens, API keys, private keys, `node_modules`, `.next`, `dist`, `build`, or other build artifacts.
+- If risky files are detected in git status or staging, stop and report.
+- Destructive operations require explicit approval, including `git reset --hard`, `git clean`, force push, deleting files or directories, rewriting history, destructive database commands, reverting unknown user changes, and changing production config.
+
 ## Strict Rules
 
 - UI tasks must check `docs/design` first.
-- If a Figma URL is provided, use Figma MCP before coding.
-- If Figma MCP is unavailable, state the limitation and use a screenshot or written spec.
+- `docs/design/workflow.md` is the source of truth for design workflow, Figma, and write-capable design tool rules.
+- Valid design references include a Figma frame, Claude Design output, screenshot, exported image, written design spec, and existing React implementation.
+- Design references must be treated as `draft`, `approved for implementation`, `implemented`, or `outdated`; if status is draft or unclear, ask the Owner before UI implementation.
+- If a Figma URL is provided, use read-only Figma MCP before coding when available.
+- If Figma MCP is unavailable, state the limitation and use an approved fallback reference such as a Claude Design output, screenshot, exported image, written spec, or existing React implementation.
 - Do not invent design tokens if Figma variables exist.
 - Do not use write-capable Figma tools unless the task explicitly asks for Figma changes.
 - For implementation tasks, produce a brief before changing code.

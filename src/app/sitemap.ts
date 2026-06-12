@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
-import { sampleProducts } from "@/features/catalog/sample-products";
+import { getProductSlugs } from "@/server/services/catalog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
   const staticRoutes = [
     "",
@@ -12,17 +12,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/legal",
     "/privacy",
     "/terms",
-    "/shipping-returns"
+    "/shipping-returns",
   ];
+
+  const slugs = await getProductSlugs();
 
   return [
     ...staticRoutes.map((route) => ({
       url: `${baseUrl}${route}`,
-      lastModified: new Date()
+      lastModified: new Date(),
     })),
-    ...sampleProducts.map((product) => ({
-      url: `${baseUrl}/product/${product.slug}`,
-      lastModified: new Date()
-    }))
+    ...slugs.map((slug) => ({
+      url: `${baseUrl}/product/${slug}`,
+      lastModified: new Date(),
+    })),
   ];
 }

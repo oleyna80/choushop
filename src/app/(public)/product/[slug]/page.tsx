@@ -6,15 +6,22 @@ import { IconBadge } from "@/components/ui/icon-badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
 import { TrustChip } from "@/components/ui/trust-chip";
-import { getProductBySlug, sampleProducts } from "@/features/catalog/sample-products";
+import {
+  mapApiProductToStorefront,
+} from "@/features/catalog/catalog-mapper";
+import {
+  getProductBySlug,
+  getProductSlugs,
+} from "@/server/services/catalog";
 import {
   getAccentClassName,
   getProductCareNotes,
   getProductTrustCues
 } from "@/features/product/product-detail";
 
-export function generateStaticParams() {
-  return sampleProducts.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -23,7 +30,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return {};
@@ -35,8 +42,8 @@ export async function generateMetadata({
     openGraph: {
       title: product.title,
       description: product.shortDescription,
-      images: [product.imageUrl]
-    }
+      images: [product.images[0]?.url ?? ""],
+    },
   };
 }
 
@@ -46,15 +53,17 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const accent = getAccentClassName(product.accentTone);
-  const trustCues = getProductTrustCues(product);
-  const careNotes = getProductCareNotes(product);
+  const p = mapApiProductToStorefront(product);
+
+  const accent = getAccentClassName(p.accentTone);
+  const trustCues = getProductTrustCues(p);
+  const careNotes = getProductCareNotes(p);
 
   return (
     <>
@@ -62,30 +71,30 @@ export default async function ProductPage({
         <div className="relative">
           <div
             className="glow-orb right-[-5rem] top-10 h-40 w-40"
-            data-tone={product.accentTone === "peach" ? "accent" : product.accentTone}
+            data-tone={p.accentTone === "peach" ? "accent" : p.accentTone}
           />
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:items-start">
             <div className="grid gap-6">
               <div className="grid gap-3">
                 <span className="eyebrow">Fiche produit</span>
                 <div className="max-w-3xl">
-                  <h1 className="text-[length:var(--text-h1)]">{product.title}</h1>
+                  <h1 className="text-[length:var(--text-h1)]">{p.title}</h1>
                   <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">
-                    {product.tagline}
+                    {p.tagline}
                   </p>
                 </div>
               </div>
 
               <ProductGallery
-                accentTone={product.accentTone}
-                badge={product.badge}
-                images={product.gallery}
-                theme={product.theme}
-                title={product.title}
+                accentTone={p.accentTone}
+                badge={p.badge}
+                images={p.gallery}
+                theme={p.theme}
+                title={p.title}
               />
             </div>
 
-            <ProductStickyBuy product={product} />
+            <ProductStickyBuy product={p} />
           </div>
         </div>
       </SectionShell>
@@ -114,7 +123,7 @@ export default async function ProductPage({
             />
 
             <div className="grid gap-3">
-              {product.includedPreview.map((item, index) => (
+              {p.includedPreview.map((item, index) => (
                 <div
                   className="grid gap-2 border-b border-[var(--line)] pb-4 last:border-b-0 last:pb-0 sm:grid-cols-[auto_1fr]"
                   key={`${item.label}-${index}`}
@@ -133,12 +142,12 @@ export default async function ProductPage({
           <div className="grid gap-8">
             <div className="grid gap-5">
               <SectionHeading
-                description={product.shortDescription}
+                description={p.shortDescription}
                 eyebrow="Ambiance"
                 title="Une surprise guidee, jamais surchargee"
               />
               <p className="max-w-2xl text-pretty text-lg leading-8 text-[var(--foreground)]">
-                {product.description}
+                {p.description}
               </p>
             </div>
 
@@ -188,7 +197,7 @@ export default async function ProductPage({
           <div className="grid gap-4">
             <SectionHeading eyebrow="FAQ" title="Questions frequentes" />
             <div className="grid gap-3">
-              {product.faq.map((item, index) => (
+              {p.faq.map((item, index) => (
                 <details
                   className="surface-panel rounded-[var(--radius-lg)] border border-white/70 bg-white/86 px-5 py-4"
                   key={`${item.question}-${index}`}

@@ -1,14 +1,16 @@
 # Design Workflow
 
-Purpose: define the minimum Figma -> React -> Figma workflow for UI work in this repository.
+Purpose: define the minimum design-reference -> React workflow for UI work in this repository. Figma is preferred when available, but valid design references can also include Claude Design output, screenshots, exported images, written design specs, or the existing React implementation.
 
-## 1. Start From A Figma Link
+## 1. Start From A Design Reference
 
-1. Check `docs/design/figma.md` before starting any UI task.
-2. Use the most specific Figma URL available: component, frame, page, then file.
-3. Extract and record the Figma file key and node ID in the implementation brief.
-4. Confirm the frame status: `draft`, `approved`, `implemented`, or `outdated`.
-5. If the frame is not listed, add or request the missing reference before changing production UI.
+1. Check `docs/design/figma.md` before starting any UI task that uses Figma.
+2. Identify the design reference type: Figma frame, Claude Design output, screenshot, exported image, written design spec, or existing React implementation.
+3. Confirm the reference status: `draft`, `approved for implementation`, `implemented`, or `outdated`.
+4. If the status is unclear, ask the Owner before changing production UI.
+5. When a Figma URL is available, use the most specific URL available: component, frame, page, then file.
+6. When using Figma, extract and record the Figma file key and node ID in the implementation brief.
+7. If the Figma frame is not listed, add or request the missing reference before changing production UI.
 
 ## 2. Read Design Context With MCP
 
@@ -26,7 +28,8 @@ Read-only tools are the default for implementation work. Do not use write-capabl
 
 Before changing React/Tailwind code, write a concise brief in the task thread that includes:
 
-- Figma file, page/frame, node ID, and source-of-truth status.
+- Design reference, source, and status.
+- Figma file, page/frame, and node ID when Figma is the reference.
 - Target React route, component, or feature area.
 - Existing React components to reuse.
 - Figma variables, styles, or components detected.
@@ -47,7 +50,7 @@ Before changing React/Tailwind code, write a concise brief in the task thread th
 
 1. Run the app locally with the project-standard command.
 2. Capture desktop and mobile screenshots for the changed surface.
-3. Compare screenshots against the source-of-truth frame or written spec.
+3. Compare screenshots against the approved design reference.
 4. Use `docs/design/review-checklist.md` for visual, responsive, typography, spacing, color, and accessibility checks.
 5. Record mismatches, accepted deviations, and unresolved design questions in the final report.
 
@@ -67,7 +70,7 @@ For normal implementation tasks, the available workflow is Figma -> React. For e
 ## 7. If Figma MCP Is Unavailable
 
 - State that Figma MCP is unavailable in the current session.
-- Use provided screenshots, exported assets, Figma web links, or written specs as static references.
+- Use provided Claude Design output, screenshots, exported assets, Figma web links, existing React implementation, or written specs as static references.
 - Do not claim exact layer, token, spacing, variable, or asset inspection from Figma.
 - Ask for a screenshot or exported frame if the implementation depends on unavailable design details.
 - Continue only with a safe MVP when the missing detail is non-blocking and assumptions are documented.

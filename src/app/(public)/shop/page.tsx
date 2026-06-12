@@ -7,12 +7,13 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
 import { Select } from "@/components/ui/select";
 import { TrustChip } from "@/components/ui/trust-chip";
+import { mapProductsToStorefront } from "@/features/catalog/catalog-mapper";
 import { sampleCollections } from "@/features/catalog/sample-collections";
-import { sampleProducts } from "@/features/catalog/sample-products";
 import type { AccentTone } from "@/features/catalog/storefront-types";
+import { getAllProducts } from "@/server/services/catalog";
 
 export const metadata = {
-  title: "Catalogue"
+  title: "Catalogue",
 };
 
 const filterChips = [
@@ -20,7 +21,7 @@ const filterChips = [
   "Petites attentions",
   "Signature pastel",
   "Editions limitees",
-  "Cadeaux premium"
+  "Cadeaux premium",
 ];
 
 const collectionVariantMap: Record<
@@ -30,11 +31,13 @@ const collectionVariantMap: Record<
   accent: "accent",
   lavender: "lavender",
   mint: "mint",
-  peach: "peach"
+  peach: "peach",
 };
 
-export default function ShopPage() {
-  const spotlightProduct = sampleProducts[1] ?? sampleProducts[0];
+export default async function ShopPage() {
+  const products = mapProductsToStorefront(await getAllProducts());
+  const spotlightProduct =
+    products.find((p) => p.featured) ?? products[1] ?? products[0];
 
   return (
     <SectionShell className="overflow-hidden" density="tight">
@@ -100,35 +103,39 @@ export default function ShopPage() {
                   </div>
                 </div>
 
-                <Card className="grid gap-5" variant="floating">
-                  <div className="grid gap-3">
-                    <Badge variant={collectionVariantMap[spotlightProduct.accentTone]}>
-                      Format vedette
-                    </Badge>
-                    <div className="grid gap-2">
-                      <h2 className="text-[length:var(--text-h3)]">
-                        {spotlightProduct.title}
-                      </h2>
-                      <p className="text-base leading-7 text-[var(--muted)]">
-                        {spotlightProduct.tagline}
+                {spotlightProduct && (
+                  <Card className="grid gap-5" variant="floating">
+                    <div className="grid gap-3">
+                      <Badge
+                        variant={collectionVariantMap[spotlightProduct.accentTone]}
+                      >
+                        Format vedette
+                      </Badge>
+                      <div className="grid gap-2">
+                        <h2 className="text-[length:var(--text-h3)]">
+                          {spotlightProduct.title}
+                        </h2>
+                        <p className="text-base leading-7 text-[var(--muted)]">
+                          {spotlightProduct.tagline}
+                        </p>
+                      </div>
+                      <p className="text-sm leading-6 text-[var(--muted)]">
+                        {spotlightProduct.shortDescription}
                       </p>
                     </div>
-                    <p className="text-sm leading-6 text-[var(--muted)]">
-                      {spotlightProduct.shortDescription}
-                    </p>
-                  </div>
 
-                  <div className="grid gap-3">
-                    {spotlightProduct.highlights.slice(0, 2).map((highlight) => (
-                      <TrustChip
-                        detail={highlight.description}
-                        icon="+"
-                        key={highlight.title}
-                        title={highlight.title}
-                      />
-                    ))}
-                  </div>
-                </Card>
+                    <div className="grid gap-3">
+                      {spotlightProduct.highlights.slice(0, 2).map((highlight) => (
+                        <TrustChip
+                          detail={highlight.description}
+                          icon="+"
+                          key={highlight.title}
+                          title={highlight.title}
+                        />
+                      ))}
+                    </div>
+                  </Card>
+                )}
               </div>
 
               <div className="grid gap-3 md:grid-cols-3">
@@ -139,7 +146,9 @@ export default function ShopPage() {
                       variant="soft"
                     >
                       <div className="grid gap-3">
-                        <Badge variant={collectionVariantMap[collection.accentTone]}>
+                        <Badge
+                          variant={collectionVariantMap[collection.accentTone]}
+                        >
                           Selection
                         </Badge>
                         <div className="grid gap-2">
@@ -155,7 +164,7 @@ export default function ShopPage() {
               </div>
             </div>
           }
-          products={sampleProducts}
+          products={products}
         />
       </div>
     </SectionShell>

@@ -1,6 +1,6 @@
 # Figma References
 
-Purpose: track Figma files, pages, frames, source-of-truth decisions, and implementation status for the Figma -> React -> Figma workflow.
+Purpose: track Figma files, pages, frames, source-of-truth decisions, and implementation status for the design-reference -> React workflow. Figma is one valid design reference; detailed design workflow and write-capable Figma tool rules live in `docs/design/workflow.md`.
 
 ## Figma Files
 
@@ -26,17 +26,19 @@ Purpose: track Figma files, pages, frames, source-of-truth decisions, and implem
 
 ## Source Of Truth Rules
 
-- A UI task should identify one source-of-truth frame before coding.
+- A UI task should identify one approved design reference before coding.
 - If Figma variables exist for color, spacing, typography, or radius, use them instead of inventing new tokens.
 - A page-level frame is the source of truth for composition; component frames are the source of truth for reusable states and variants.
-- If the linked frame is `draft`, implementation requires an explicit brief describing what is in scope and what is provisional.
+- If the linked frame is `draft`, it is not automatically approved for implementation.
+- If the source status is unclear, ask the Owner before changing production UI.
 - Keep outdated links for traceability, but do not implement from an `outdated` frame.
+- Do not use write-capable Figma tools unless the task explicitly asks for Figma changes.
 
 ## Status Values
 
 | Status | Meaning |
 | --- | --- |
-| `draft` | Exploratory design or incomplete source. Implementation needs a brief and stated assumptions. |
-| `approved` | Approved source of truth for implementation. |
+| `draft` | Exploratory design or incomplete source. It does not authorize implementation by itself. |
+| `approved for implementation` | Approved source of truth for implementation. |
 | `implemented` | React implementation exists and is ready for visual review. |
 | `outdated` | No longer valid as implementation source. |

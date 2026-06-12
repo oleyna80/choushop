@@ -1,15 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/lib/db/prisma";
+import { getAllProducts } from "@/server/services/catalog";
 
 export async function GET() {
-  const products = await prisma.product.findMany({
-    where: { status: "ACTIVE" },
-    include: {
-      images: { orderBy: { sortOrder: "asc" } }
-    },
-    orderBy: [{ featured: "desc" }, { createdAt: "desc" }]
-  });
-
+  const products = await getAllProducts();
   return NextResponse.json({ products });
 }
