@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { auth } from "@/auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { productUpdateSchema } from "@/lib/validation/product";
 import { getProductBySlug, updateProduct } from "@/server/services/catalog";
@@ -16,6 +17,9 @@ async function updateProductAction(
   formData: FormData
 ): Promise<State> {
   "use server";
+
+  const session = await auth();
+  if (!session) return { error: "Unauthorized. Please log in." };
 
   const rl = checkRateLimit("admin:update-product");
   if (!rl.allowed) {

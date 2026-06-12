@@ -13,8 +13,8 @@
 | 2026-06-12 | wb-003 | Standard tier | Product detail page API fetch + refactor shared helpers | — | skipped (1 file, same pattern) | READY |
 | 2026-06-12 | wb-004 | Standard tier | Catalog service layer + refactor 3 pages + sitemap. Multi-domain. | — | skipped (established pattern) | READY |
 | 2026-06-12 | wb-005 | Standard tier | Admin product CRUD: DB writes, Zod, forms, auth. First mutation WB. | — | skipped | READY |
-| 2026-06-12 | wb-006 | Standard tier | First parallel dispatch: 3 streams (cart + collections + security). Snapshot → critic-skipped → 3 subagents → merge → verify. | 3 (2 coder + 1 reviewer) | skipped (no new topology for critic check at runtime) | READY |
-| 2026-06-12 | wb-005 | Standard tier | DB writes: admin product CRUD. Zod validation, forms, auth. First mutation WB. | — | skipped | READY |
+| 2026-06-12 | wb-006 | Standard tier | First parallel dispatch: 3 streams (cart + collections + security). Snapshot → critic-skipped → 3 subagents → merge → verify. | 3 (2 coder + 1 reviewer) | skipped | READY |
+| 2026-06-12 | wb-007 | Standard tier | Zod hardening + error feedback + rate limiting. Closes 4 MEDIUM security findings. Cross-cutting concern. | — | SKIPPED — Owner approval (WB-006 Stream C already identified findings) | READY |
 
 ## What to log
 

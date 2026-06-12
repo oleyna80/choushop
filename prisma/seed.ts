@@ -159,6 +159,13 @@ async function main() {
       sortOrder: 30,
     },
   });
+
+  // Seed admin user (magic link auth — email must match RESEND sender domain in production)
+  await prisma.user.upsert({
+    where: { email: "admin@choushop.fr" },
+    update: { role: "OWNER" },
+    create: { email: "admin@choushop.fr", role: "OWNER" },
+  });
 }
 
 main()
