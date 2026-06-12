@@ -35,3 +35,7 @@
 - Subagent report contents — these are in `review-log.md`
 - Architecture decisions — these are in `decisions.md`
 - Task status — this is in `progress.md` and `docs/tasklist/`
+| 2026-06-12 | wb-test | Standard tier | Hook validation test. | — | critic: SKIPPED — Owner approval — testing anti-skip enforcement | READY |
+| 2026-06-12 | wb-skip1 | Standard tier | Test consecutive skips. | — | critic: SKIPPED — Owner approval — testing consecutive skip limit | READY |
+| 2026-06-12 | wb-skip2 | Standard tier | Test consecutive skips. | — | critic: SKIPPED — Owner approval — testing consecutive skip limit | READY |
+| 2026-06-12 | wb-skip3 | Standard tier | Test consecutive skips. | — | critic: SKIPPED — Owner approval — testing consecutive skip limit | READY |

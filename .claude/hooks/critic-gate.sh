@@ -80,7 +80,7 @@ case "$status" in
     fi
 
     # Search orchestrator-log for matching SKIPPED entry with this WB ID
-    if ! grep -q "critic: SKIPPED.*${wb_id}" "$LOG_FILE" 2>/dev/null; then
+    if ! grep -q "^|.*${wb_id}.*critic: SKIPPED" "$LOG_FILE" 2>/dev/null; then
       jq -n --arg wb "$wb_id" '{
         continue: false,
         hookSpecificOutput: {
