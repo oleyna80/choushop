@@ -15,6 +15,7 @@
 | 2026-06-12 | wb-005 | Standard tier | Admin product CRUD: DB writes, Zod, forms, auth. First mutation WB. | — | skipped | READY |
 | 2026-06-12 | wb-006 | Standard tier | First parallel dispatch: 3 streams (cart + collections + security). Snapshot → critic-skipped → 3 subagents → merge → verify. | 3 (2 coder + 1 reviewer) | skipped | READY |
 | 2026-06-12 | wb-007 | Standard tier | Zod hardening + error feedback + rate limiting. Closes 4 MEDIUM security findings. Cross-cutting concern. | — | SKIPPED — Owner approval (WB-006 Stream C already identified findings) | READY |
+| 2026-06-12 | wb-008 | Full tier | Admin auth: NextAuth v5 + Resend magic link + middleware + session checks. CRITICAL security fix. DB migration. 10+ files. | — | SKIPPED — Owner approval (well-understood domain, NextAuth patterns established) | READY |
 
 ## What to log
 
