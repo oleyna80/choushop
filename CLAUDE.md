@@ -41,17 +41,27 @@ This project uses the Agentic SDLC Framework. See `AGENTS.md` for the full contr
 solution-architect → verifier (skill) → Plan mode → critic → Implement → verifier (agent)
 ```
 
+**Solution-architect triggers** — must run BEFORE Plan mode when:
+- New service layer (new file in `src/server/services/` or `src/lib/`)
+- New DB model or schema change
+- New API surface (new route, new endpoint)
+- New subagent topology (agent combination not used before)
+- Cross-cutting concern (auth, logging, error handling)
+Skip only if domain already covered in prior WB.
+
+**Critic enforcement:** Mandatory when triggers active (3+ files, DB writes, new topology, security/auth). Skip requires Owner approval in orchestrator-log.
+
+**Verifier mode:** See `.agent/workflows/sdd-protocol.md` Verifier Mode Decision Table.
+
 **Key additions (v2):**
 - Critic agent validates Control Tower decisions after Stage 0
-- `memory_bank/orchestrator-log.md` — audit trail of decisions
-- `memory_bank/review-log.md` — subagent result log
-- `memory_bank/snapshots/` — context snapshots before parallel dispatch
+- `memory-bank/orchestrator-log.md` — audit trail of decisions
+- `memory-bank/review-log.md` — subagent result log
+- `memory-bank/snapshots/` — context snapshots before parallel dispatch
 - Merge protocol for consolidating parallel subagent results
 - Templates in `docs/templates/`
 
-**Memory bank (two directories):**
-- `memory-bank/` (hyphen) — project content (git-tracked)
-- `memory_bank/` (underscore) — session audit trail (local-only)
+**Memory bank:** `memory-bank/` (hyphen) — project content + session audit trail (git-tracked)
 
 **Rules (from original):**
 - Do not write production code without approved scope and a clear verification plan.

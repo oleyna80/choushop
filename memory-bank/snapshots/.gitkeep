@@ -1,0 +1,5 @@
+# Snapshot naming: snapshot-[wb-id]-[stage]-[YYYY-MM-DD].md
+# Examples:
+#   snapshot-wb-003-stage0-2026-06-12.md
+#   snapshot-wb-003-pre-parallel-2026-06-12.md
+#   snapshot-wb-004-recovery-2026-06-12.md

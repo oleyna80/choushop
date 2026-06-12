@@ -81,6 +81,20 @@ States:
 - Implementation complete (Stage 1 DONE)
 - Verification tier specified (lite/standard/full)
 
+### Verifier Mode Decision Table
+
+How to verify depends on Work Block characteristics. "Mandatory" = must spawn
+verifier agent; cannot be replaced by inline tsc.
+
+| Condition | Verifier Mode |
+|---|---|
+| 1-2 files, no DB, no auth, read-only | Inline tsc + lint |
+| 3+ files, logic changes | Inline tsc + spawn verifier agent (Standard tier) |
+| DB writes / migrations | Spawn verifier agent — **mandatory** |
+| Auth / security-sensitive changes | Spawn verifier agent — **mandatory** |
+| Parallel dispatch results (merge step) | Spawn verifier agent — **mandatory** |
+| Side-effect class: live-infra / live-data | Spawn verifier agent + Full tier — **mandatory** |
+
 ### Activities
 
 #### Lite Tier

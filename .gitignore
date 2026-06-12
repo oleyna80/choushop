@@ -48,7 +48,6 @@ coverage/
 
 # Local agent/private config
 .codex/
-memory_bank/
 .claude/agent-memory/
 
 # Agent/development workflow docs are synchronized through Git by default.
