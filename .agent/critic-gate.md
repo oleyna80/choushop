@@ -1,3 +1,31 @@
-Status: SKIPPED
+Status: PENDING
+Work Block: [wb-id]
 
-critic: SKIPPED — Owner approval — Pure verification WB, no code changes. Read-only curl checks.
+# Critic Gate
+
+> Control Tower updates this file after Stage 0 Preflight.
+> The `critic-gate.sh` hook blocks Edit/Write until Status is READY or valid SKIPPED.
+
+## Gate Status
+
+| Status | Meaning | Edit/Write |
+|---|---|---|
+| PENDING | Critic not yet launched | BLOCKED |
+| READY | Critic completed, report in `docs/reports/` | ALLOWED |
+| SKIPPED | Owner approval + orchestrator-log entry + no-skip domain check passed | ALLOWED |
+
+## No-Skip Domain
+
+If this WB touches auth, payments, DB migration, new service, or deploy
+for the first time → `No-Skip: true` (critic mandatory, no SKIPPED possible).
+
+No-Skip: [true/false]
+
+## Triggers Active
+
+[List active triggers from AGENTS.md § Critic Review Gate]
+
+## Skip Record (if SKIPPED)
+
+Must match orchestrator-log entry exactly.
+Format: `critic: SKIPPED — Owner approval — [reason]`
