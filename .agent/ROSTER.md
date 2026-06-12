@@ -15,6 +15,7 @@
 | Scoped Coder | `choushop-scoped-coder` | Approved-scope implementation only | scoped-coder, scoped-commit-guard, shell-context-guard |
 | Reviewer | `choushop-reviewer` | Read-only multi-dimension review | reviewer, security-audit-triage |
 | Verifier | `choushop-verifier` | AC verification gate (read-only) | verifier, security-verification-gate, systematic-debugging |
+| Codex Reviewer | `choushop-codex-reviewer` | External adversarial review (GPT model family, read-only) | codex-verification |
 
 ## Analysis Specializations
 

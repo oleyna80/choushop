@@ -120,6 +120,8 @@ verifier agent; cannot be replaced by inline tsc.
 - [ ] Runtime proof via `curl -fsSI`
 - [ ] CSP/security headers verified
 - [ ] CSRF/origin guard for mutations
+- [ ] Codex adversarial review (if Codex installed) — second opinion from GPT model family
+- [ ] Consolidation: merge Verifier + Codex findings
 
 ### Exit Conditions
 - Verdict: `READY` or `BLOCKED`
