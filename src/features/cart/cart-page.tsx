@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Receipt, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { mapApiProductToStorefront } from "@/features/catalog/catalog-mapper";
+import type { StorefrontProduct } from "@/features/catalog/storefront-types";
+
 import { CartLineItem } from "@/components/shop/cart-line-item";
 import { OrderSummaryCard } from "@/components/shop/order-summary-card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +24,7 @@ import { CheckoutStepIndicator } from "@/features/checkout/checkout-step-indicat
 
 export function CartClientPage() {
   const [items, setItems] = useState<CartLineInput[]>([]);
+  const [productMap, setProductMap] = useState<Map<string, StorefrontProduct>>(new Map());
 
   useEffect(() => {
     const sync = () => setItems(readCart().items);
@@ -29,7 +33,21 @@ export function CartClientPage() {
     return () => window.removeEventListener("choushop:cart", sync);
   }, []);
 
-  const lines = useMemo(() => resolveCartLines(items), [items]);
+  useEffect(() => {
+    fetch("/api/products")
+      .then((r) => r.json())
+      .then((data) => {
+        const map = new Map<string, StorefrontProduct>();
+        for (const p of data.products ?? []) {
+          const storefront = mapApiProductToStorefront(p);
+          map.set(storefront.id, storefront);
+        }
+        setProductMap(map);
+      })
+      .catch(() => {});
+  }, []);
+
+  const lines = useMemo(() => resolveCartLines(items, productMap), [items, productMap]);
   const subtotal = useMemo(() => getCartSubtotal(lines), [lines]);
   const itemCount = useMemo(() => getCartItemCount(lines), [lines]);
   const isEmpty = lines.length === 0;

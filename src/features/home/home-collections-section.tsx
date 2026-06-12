@@ -3,10 +3,13 @@ import { ArrowRight } from "lucide-react";
 
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
-import { sampleCollections } from "@/features/catalog/sample-collections";
+import type { AccentTone } from "@/features/catalog/storefront-types";
 import { getToneStyles } from "@/features/home/tone-styles";
+import { getAllCollections } from "@/server/services/collections";
 
-export function HomeCollectionsSection() {
+export default async function HomeCollectionsSection() {
+  const collections = await getAllCollections();
+
   return (
     <SectionShell density="tight">
       <div className="grid gap-8">
@@ -17,14 +20,14 @@ export function HomeCollectionsSection() {
         />
 
         <div className="grid gap-4 lg:grid-cols-3">
-          {sampleCollections.map((collection) => {
-            const styles = getToneStyles(collection.accentTone);
+          {collections.map((collection) => {
+            const styles = getToneStyles(collection.accentTone as AccentTone);
 
             return (
               <Link
                 key={collection.id}
                 className={`group surface-panel rounded-[var(--radius-xl)] border ${styles.border} bg-gradient-to-br ${styles.panel} p-5 hover:-translate-y-1 hover:shadow-[var(--shadow-raised)]`}
-                href={collection.href}
+                href="/shop"
               >
                 <div className="flex items-start justify-between gap-3">
                   <span className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">

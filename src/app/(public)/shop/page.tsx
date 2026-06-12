@@ -8,9 +8,9 @@ import { SectionShell } from "@/components/ui/section-shell";
 import { Select } from "@/components/ui/select";
 import { TrustChip } from "@/components/ui/trust-chip";
 import { mapProductsToStorefront } from "@/features/catalog/catalog-mapper";
-import { sampleCollections } from "@/features/catalog/sample-collections";
 import type { AccentTone } from "@/features/catalog/storefront-types";
 import { getAllProducts } from "@/server/services/catalog";
+import { getAllCollections } from "@/server/services/collections";
 
 export const metadata = {
   title: "Catalogue",
@@ -36,6 +36,7 @@ const collectionVariantMap: Record<
 
 export default async function ShopPage() {
   const products = mapProductsToStorefront(await getAllProducts());
+  const collections = await getAllCollections();
   const spotlightProduct =
     products.find((p) => p.featured) ?? products[1] ?? products[0];
 
@@ -139,15 +140,15 @@ export default async function ShopPage() {
               </div>
 
               <div className="grid gap-3 md:grid-cols-3">
-                {sampleCollections.map((collection) => (
-                  <Link href={collection.href} key={collection.id}>
+                {collections.map((collection) => (
+                  <Link href="/shop" key={collection.id}>
                     <Card
                       className="h-full border-white/65 transition-transform hover:-translate-y-1"
                       variant="soft"
                     >
                       <div className="grid gap-3">
                         <Badge
-                          variant={collectionVariantMap[collection.accentTone]}
+                          variant={collectionVariantMap[collection.accentTone as AccentTone]}
                         >
                           Selection
                         </Badge>

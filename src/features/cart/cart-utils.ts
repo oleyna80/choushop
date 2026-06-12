@@ -1,10 +1,13 @@
+import type { StorefrontProduct } from "@/features/catalog/storefront-types";
 import type { CartLineInput, CartResolvedLine } from "@/features/cart/cart-types";
-import { sampleProducts } from "@/features/catalog/sample-products";
 
-export function resolveCartLines(items: CartLineInput[]): CartResolvedLine[] {
+export function resolveCartLines(
+  items: CartLineInput[],
+  productMap: Map<string, StorefrontProduct>
+): CartResolvedLine[] {
   return items
     .map((item) => {
-      const product = sampleProducts.find((entry) => entry.id === item.productId);
+      const product = productMap.get(item.productId);
 
       if (!product) {
         return null;

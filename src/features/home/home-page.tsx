@@ -1,9 +1,9 @@
 import type { StorefrontProduct } from "@/features/catalog/storefront-types";
-import { HomeCollectionsSection } from "@/features/home/home-collections-section";
+import HomeCollectionsSection from "@/features/home/home-collections-section";
 import { HomeExperienceSection } from "@/features/home/home-experience-section";
 import { HomeFeaturedProductsSection } from "@/features/home/home-featured-products-section";
 import { HomeFinalCta } from "@/features/home/home-final-cta";
-import { HomeHero } from "@/features/home/home-hero";
+import HomeHero from "@/features/home/home-hero";
 
 interface Props {
   products: StorefrontProduct[];

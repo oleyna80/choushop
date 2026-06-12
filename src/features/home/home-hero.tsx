@@ -13,18 +13,18 @@ import { Button } from "@/components/ui/button";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { Price } from "@/components/ui/price";
 import { TrustChip } from "@/components/ui/trust-chip";
-import { sampleCollections } from "@/features/catalog/sample-collections";
-import type { StorefrontProduct } from "@/features/catalog/storefront-types";
+import type { AccentTone, StorefrontProduct } from "@/features/catalog/storefront-types";
 import { getToneStyles } from "@/features/home/tone-styles";
+import { getAllCollections } from "@/server/services/collections";
 
-export function HomeHero({
+export default async function HomeHero({
   heroProduct,
   secondaryProducts
 }: {
   heroProduct: StorefrontProduct;
   secondaryProducts: StorefrontProduct[];
 }) {
-  const collections = sampleCollections.slice(0, 2);
+  const collections = (await getAllCollections()).slice(0, 2);
   const tone = getToneStyles(heroProduct.accentTone);
 
   return (
@@ -178,13 +178,13 @@ export function HomeHero({
 
               <div className="mt-4 grid gap-3 border-t border-white/70 pt-4 sm:grid-cols-2">
                 {collections.map((collection) => {
-                  const styles = getToneStyles(collection.accentTone);
+                  const styles = getToneStyles(collection.accentTone as AccentTone);
 
                   return (
                     <Link
                       key={collection.id}
                       className={`group rounded-[var(--radius-lg)] border ${styles.border} ${styles.wash} px-4 py-4 hover:-translate-y-0.5`}
-                      href={collection.href}
+                      href="/shop"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">

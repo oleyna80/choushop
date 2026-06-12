@@ -108,6 +108,57 @@ async function main() {
       sortOrder: 20,
     },
   });
+
+  await prisma.collection.upsert({
+    where: { slug: "mini-moments" },
+    update: {
+      title: "Mini moments a offrir",
+      description: "Formats doux, rassurants et faciles a choisir pour une petite attention.",
+      accentTone: "lavender",
+      sortOrder: 10,
+    },
+    create: {
+      slug: "mini-moments",
+      title: "Mini moments a offrir",
+      description: "Formats doux, rassurants et faciles a choisir pour une petite attention.",
+      accentTone: "lavender",
+      sortOrder: 10,
+    },
+  });
+
+  await prisma.collection.upsert({
+    where: { slug: "signature-box" },
+    update: {
+      title: "Les box signature",
+      description: "La selection la plus ChouShop: cute, premium et tres cadeau.",
+      accentTone: "accent",
+      sortOrder: 20,
+    },
+    create: {
+      slug: "signature-box",
+      title: "Les box signature",
+      description: "La selection la plus ChouShop: cute, premium et tres cadeau.",
+      accentTone: "accent",
+      sortOrder: 20,
+    },
+  });
+
+  await prisma.collection.upsert({
+    where: { slug: "limited-drops" },
+    update: {
+      title: "Drops limites",
+      description: "Capsules plus rares avec une ambiance plus forte et un stock plus court.",
+      accentTone: "mint",
+      sortOrder: 30,
+    },
+    create: {
+      slug: "limited-drops",
+      title: "Drops limites",
+      description: "Capsules plus rares avec une ambiance plus forte et un stock plus court.",
+      accentTone: "mint",
+      sortOrder: 30,
+    },
+  });
 }
 
 main()
