@@ -1,17 +1,24 @@
-import { prisma } from "@/lib/db/prisma";
+import Link from "next/link";
+
 import { formatMoney } from "@/lib/money";
+import { getAllProductsForAdmin } from "@/server/services/catalog";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50
-  });
+  const products = await getAllProductsForAdmin();
 
   return (
     <div>
-      <h1 className="text-4xl font-black">Products</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl font-black">Products</h1>
+        <Link
+          className="inline-flex items-center rounded-[var(--radius-pill)] bg-[var(--foreground)] px-4 py-2 text-sm font-semibold text-white"
+          href="/admin/products/new"
+        >
+          + New Product
+        </Link>
+      </div>
       <div className="mt-8 overflow-hidden rounded-md border border-[var(--line)]">
         <table className="w-full border-collapse bg-white text-sm">
           <thead className="bg-[var(--background)] text-left">
@@ -25,10 +32,19 @@ export default async function AdminProductsPage() {
           <tbody>
             {products.map((product) => (
               <tr className="border-t border-[var(--line)]" key={product.id}>
-                <td className="p-4 font-bold">{product.title}</td>
+                <td className="p-4 font-bold">
+                  <Link
+                    className="hover:underline"
+                    href={`/admin/products/${product.slug}/edit`}
+                  >
+                    {product.title}
+                  </Link>
+                </td>
                 <td className="p-4">{product.status}</td>
                 <td className="p-4">{product.stock}</td>
-                <td className="p-4">{formatMoney(product.price, product.currency)}</td>
+                <td className="p-4">
+                  {formatMoney(product.price, product.currency)}
+                </td>
               </tr>
             ))}
             {products.length === 0 ? (
