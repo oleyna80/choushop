@@ -1,4 +1,4 @@
-import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 import { PrismaClient } from "../src/generated/prisma";
 
@@ -11,7 +11,7 @@ if (!connectionString) {
 }
 
 const prisma = new PrismaClient({
-  adapter: new PrismaNeon({ connectionString })
+  adapter: new PrismaPg({ connectionString }),
 });
 
 async function main() {
@@ -31,7 +31,7 @@ async function main() {
         taxRate: product.taxRate,
         status: "ACTIVE",
         featured: product.featured,
-        stock: product.stock
+        stock: product.stock,
       },
       create: {
         id: product.id,
@@ -52,10 +52,10 @@ async function main() {
           create: {
             url: product.imageUrl,
             alt: product.title,
-            sortOrder: 0
-          }
-        }
-      }
+            sortOrder: 0,
+          },
+        },
+      },
     });
   }
 
@@ -69,7 +69,7 @@ async function main() {
       zone: "FR",
       countries: ["FR"],
       isActive: true,
-      sortOrder: 10
+      sortOrder: 10,
     },
     create: {
       id: "fr-standard",
@@ -80,8 +80,8 @@ async function main() {
       zone: "FR",
       countries: ["FR"],
       isActive: true,
-      sortOrder: 10
-    }
+      sortOrder: 10,
+    },
   });
 
   await prisma.shippingMethod.upsert({
@@ -94,7 +94,7 @@ async function main() {
       zone: "FR",
       countries: ["FR"],
       isActive: true,
-      sortOrder: 20
+      sortOrder: 20,
     },
     create: {
       id: "fr-tracked",
@@ -105,8 +105,8 @@ async function main() {
       zone: "FR",
       countries: ["FR"],
       isActive: true,
-      sortOrder: 20
-    }
+      sortOrder: 20,
+    },
   });
 }
 
