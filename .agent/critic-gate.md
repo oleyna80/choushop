@@ -1,13 +1,14 @@
-Status: SKIPPED
+Status: PENDING
 
-# Critic Gate — WB-007
+# Critic Gate
 
-## Skip Record
+> Control Tower updates this file after Stage 0 Preflight.
+> The `critic-gate.sh` hook blocks Edit/Write until Status is READY or SKIPPED.
 
-critic: SKIPPED — Owner approval — Security review (WB-006 Stream C) already identified all 3 MEDIUM findings being fixed. Plan approved by Owner via ExitPlanMode.
+## Gate Status
 
-## Triggers Active
-
-- 4 files touched
-- Security-sensitive (Zod validation hardening, rate limiting)
-- Production code write
+| Status | Meaning | Edit/Write |
+|---|---|---|
+| PENDING | Critic not yet launched | BLOCKED |
+| READY | Critic completed, report in `docs/reports/` | ALLOWED |
+| SKIPPED | Owner approval recorded in orchestrator-log | ALLOWED |

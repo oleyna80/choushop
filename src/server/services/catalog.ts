@@ -89,45 +89,48 @@ export async function createProduct(input: ProductCreateInput) {
 }
 
 export async function updateProduct(slug: string, input: ProductUpdateInput) {
-  const existing = await prisma.product.findUnique({ where: { slug } });
-  if (!existing) return null;
-
-  const product = await prisma.product.update({
-    where: { id: existing.id },
-    data: {
-      ...(input.slug !== undefined && { slug: input.slug }),
-      ...(input.title !== undefined && { title: input.title }),
-      ...(input.shortDescription !== undefined && {
-        shortDescription: input.shortDescription,
-      }),
-      ...(input.description !== undefined && {
-        description: input.description,
-      }),
-      ...(input.type !== undefined && { type: input.type as ProductType }),
-      ...(input.theme !== undefined && { theme: input.theme }),
-      ...(input.price !== undefined && { price: input.price }),
-      ...(input.compareAtPrice !== undefined && {
-        compareAtPrice: input.compareAtPrice,
-      }),
-      ...(input.currency !== undefined && { currency: input.currency }),
-      ...(input.taxRate !== undefined && { taxRate: input.taxRate }),
-      ...(input.status !== undefined && { status: input.status as ProductStatus }),
-      ...(input.featured !== undefined && { featured: input.featured }),
-      ...(input.stock !== undefined && { stock: input.stock }),
-      ...(input.sku !== undefined && { sku: input.sku }),
-      ...(input.weight !== undefined && { weight: input.weight }),
-      ...(input.images !== undefined && {
-        images: {
-          deleteMany: {},
-          create: input.images.map((image, index) => ({
-            url: image.url,
-            alt: image.alt,
-            sortOrder: index,
-          })),
-        },
-      }),
-    },
-  });
+  let product;
+  try {
+    product = await prisma.product.update({
+      where: { slug },
+      data: {
+        ...(input.slug !== undefined && { slug: input.slug }),
+        ...(input.title !== undefined && { title: input.title }),
+        ...(input.shortDescription !== undefined && { shortDescription: input.shortDescription }),
+        ...(input.description !== undefined && { description: input.description }),
+        ...(input.type !== undefined && { type: input.type as ProductType }),
+        ...(input.theme !== undefined && { theme: input.theme }),
+        ...(input.price !== undefined && { price: input.price }),
+        ...(input.compareAtPrice !== undefined && { compareAtPrice: input.compareAtPrice }),
+        ...(input.currency !== undefined && { currency: input.currency }),
+        ...(input.taxRate !== undefined && { taxRate: input.taxRate }),
+        ...(input.status !== undefined && { status: input.status as ProductStatus }),
+        ...(input.featured !== undefined && { featured: input.featured }),
+        ...(input.stock !== undefined && { stock: input.stock }),
+        ...(input.sku !== undefined && { sku: input.sku }),
+        ...(input.weight !== undefined && { weight: input.weight }),
+        ...(input.images !== undefined && {
+          images: {
+            deleteMany: {},
+            create: input.images.map((image, index) => ({
+              url: image.url,
+              alt: image.alt,
+              sortOrder: index,
+            })),
+          },
+        }),
+      },
+    });
+  } catch {
+    await writeEvent(prisma, {
+      eventType: "product.update_failed",
+      entityType: "product",
+      entityId: slug,
+      payloadJson: { slug, reason: "not_found" },
+      source: "internal-api",
+    });
+    return null;
+  }
 
   await writeEvent(prisma, {
     eventType: "product.updated",
