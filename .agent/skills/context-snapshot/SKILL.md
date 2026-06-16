@@ -47,13 +47,13 @@ Skip when:
 4. **Map isolation zones** — for each parallel agent: which files it owns vs. shares
 5. **Define constraints** — files not to touch, decisions not to reconsider, hard stops
 6. **Define recovery plan** — per-agent timeout, conflict resolution, stale snapshot action
-7. **Write snapshot** — `memory_bank/snapshots/snapshot-[wb-id]-[stage]-[date].md`
+7. **Write snapshot** — `memory-bank/snapshots/snapshot-[wb-id]-[stage]-[date].md`
 8. **Reference in mission briefs** — add snapshot path to each subagent's "Inputs / Files to Read"
 
 ## Snapshot Naming
 
 ```
-memory_bank/snapshots/snapshot-[wb-id]-[stage]-[YYYY-MM-DD].md
+memory-bank/snapshots/snapshot-[wb-id]-[stage]-[YYYY-MM-DD].md
 ```
 
 Examples:
@@ -72,13 +72,13 @@ Examples:
 
 1. **Create** — before parallel dispatch
 2. **Reference** — in each subagent's mission brief
-3. **Archive** — after all parallel agents complete (move to `memory_bank/snapshots/archive/` or keep in place)
+3. **Archive** — after all parallel agents complete (move to `memory-bank/snapshots/archive/` or keep in place)
 4. **Never delete** — snapshots are part of the audit trail
 
 ## Constraints
 
 - **Control Tower only** — subagents never create or modify snapshots
-- **Read-only for subagents** — enforced by convention (subagents have no write access to memory_bank)
+- **Read-only for subagents** — enforced by convention (subagents have no write access to memory-bank)
 - **Immutable after creation** — do not edit a snapshot once subagents are dispatched
 - **Part of audit trail** — snapshots persist alongside orchestrator-log.md
 - **No secrets** — never capture `.env` values, tokens, or credentials in snapshots
@@ -105,7 +105,7 @@ Use `docs/templates/snapshot-template.md` for the full structure. Key sections:
 
 ## Handoff
 
-- **Success condition:** snapshot written to `memory_bank/snapshots/`, referenced in all parallel mission briefs
+- **Success condition:** snapshot written to `memory-bank/snapshots/`, referenced in all parallel mission briefs
 - **Next:** proceed with parallel dispatch
 - **Auto-proceed:** YES — snapshot is a pre-dispatch step, not a gate
 - **Hard stop:** NO

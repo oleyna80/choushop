@@ -101,7 +101,7 @@ If you catch yourself thinking:
 - Proposing solutions before tracing data flow
 - "One more fix attempt" (when already tried 2+)
 
-## {{PROJECT_NAME}}-Specific Context
+## ChouShop-Specific Context
 
 When debugging in this project, check:
 - `web/` — Next.js app, check `npm run check:types` first

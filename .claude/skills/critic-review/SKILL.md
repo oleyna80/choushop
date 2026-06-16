@@ -61,7 +61,7 @@ AND ANY of:
 ### 1. Base role — Critic
 | Allowed | Forbidden |
 |---------|-----------|
-| Read AGENTS.md, CLAUDE.md, memory_bank, docs | Any Edit/Write |
+| Read AGENTS.md, CLAUDE.md, memory-bank, docs | Any Edit/Write |
 | Read Stage 0 Preflight output | Issue BLOCKED/READY verdicts |
 | Read Work Block definition, plan, tasklist | Override Control Tower decisions |
 | Inspect skill definitions | Access `.env`, secrets, live DB |

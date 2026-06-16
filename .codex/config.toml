@@ -1,0 +1,12 @@
+# /home/azur/Projects/WSL/projects/choushop/.codex/config.toml
+
+[features]
+multi_agent = true
+browser_use = true
+image_generation = true
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+enabled = false
+required = false
+tool_timeout_sec = 120

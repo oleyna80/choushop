@@ -14,18 +14,19 @@
       "Bash(mkdir *)",
       "Bash(cp *)",
       "Bash(mv *)",
-      "Bash(rm *)",
       "Bash(chmod *)",
       "Bash(which *)",
       "Bash(fuser *)",
       "Bash(python *)",
       "Bash(pip *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "mcp__codex__codex"
     ]
   },
   "enabledMcpjsonServers": [
     "context7",
     "sequential-thinking",
-    "playwright"
+    "playwright",
+    "codex"
   ]
 }

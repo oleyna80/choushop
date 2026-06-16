@@ -1,6 +1,7 @@
-# Skills (Claude Code runtime)
+# Claude Runtime Skills
 
-Skills loaded by Claude Code at runtime. Bootstrap copies the same skills into
-`.agent/skills/` for project-neutral routing.
+Bootstrap copies core framework skills here for Claude Code.
 
-See `.agent/ROSTER.md` for the skill routing table.
+The `.agent/skills/` directory is kept as the project-neutral routing mirror
+used by the SDLC contract and by tools that do not read Claude's native skill
+directory.

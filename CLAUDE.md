@@ -41,13 +41,29 @@ This project uses the Agentic SDLC Framework. See `AGENTS.md` for the full contr
 solution-architect → verifier (skill) → Plan mode → critic → Implement → verifier (agent)
 ```
 
-**Dual-model QC (Full tier / high-risk):**
+**Dual-model QC (CC-native, MCP-backed):**
+
 ```
-critic (Claude) ──→  gpt-critic (GPT via MCP)   ──→ merge → Control Tower
-verifier (Claude) ──→ gpt-verifier (GPT via MCP) ──→ merge → consolidation
+Stage 0.5: critic (Claude) ──→ gpt-critic (GPT via MCP)   ──→ merge
+Stage 2:   verifier (Claude) ──→ gpt-verifier (GPT via MCP) ──→ merge
+Optional:  codex-reviewer (GPT via MCP) for explicit extra deep-review slices
 ```
 
-**GPT agents:** `.claude/agents/gpt-critic.md`, `.claude/agents/gpt-verifier.md`
+GPT agents launch automatically when: Full tier, first WB in new domain, or
+Claude critic returns non-approve. GPT output is advisory — Claude agents remain
+the authoritative gates. Codex MCP unavailable → log gap, proceed.
+
+Canonical Codex path: `.mcp.json` starts `codex mcp-server`; agents call the
+`mcp__codex__codex` tool. Direct `Bash(codex *)` calls are intentionally not an
+approved path because they bypass the read-only reviewer/verifier contract.
+
+Default mode is read-only/advisory. Write-capable Codex work requires explicit
+Owner approval for a Coder scope, write-set, side-effect class, and verification
+plan. Every GPT/Codex run must record mode, scope, base/ref when known, Codex
+session id, findings, inspection gaps, and merge recommendation.
+
+Cost budget: ~300K GPT tokens max per Full-tier WB. Setup: Codex CLI + login + `.mcp.json` + `.codex/config.toml`.
+Learnings: `framework/lessons-learned.md` (Agentic SDLC Framework repo).
 
 **Solution-architect triggers** — must run BEFORE Plan mode when:
 - New service layer (new file in `src/server/services/` or `src/lib/`)

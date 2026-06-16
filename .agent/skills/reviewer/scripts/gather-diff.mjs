@@ -8,7 +8,7 @@
  *   - git: branch, commit, changed files with diff stats
  *   - files: categorized by type (tsx, ts, css, config, docs, md)
  *   - routes: affected Next.js routes
- *   - ssot: memory_bank/ and docs/ drift indicators
+ *   - ssot: memory-bank/ and docs/ drift indicators
  */
 
 import { execSync } from 'node:child_process';
@@ -52,7 +52,7 @@ const CATEGORIES = {
   lib: f => /\.ts$/.test(f) && (f.includes('/lib/') || f.includes('/utils/')),
   config: f => /\.(json|mjs|js|yml|yaml|toml)$/.test(f) && !f.includes('node_modules'),
   css: f => /\.css$/.test(f),
-  docs: f => /\.md$/.test(f) && (f.includes('docs/') || f.includes('memory_bank/')),
+  docs: f => /\.md$/.test(f) && (f.includes('docs/') || f.includes('memory-bank/')),
   agent: f => /\.md$/.test(f) && (f.includes('.agent/') || f.includes('.claude/')),
   docker: f => /docker|Dockerfile|compose/.test(f),
   script: f => /\.sh$/.test(f) || (f.includes('scripts/') && /\.(ts|js|mjs)$/.test(f)),
@@ -89,8 +89,8 @@ for (const p of apiPaths) {
 }
 
 // --- SSOT drift indicators ---
-const memoryBankFiles = existsSync(join(cwd, 'memory_bank'))
-  ? globSync('memory_bank/*.md', { cwd }).map(f => relative(cwd, join(cwd, f)))
+const memoryBankFiles = existsSync(join(cwd, 'memory-bank'))
+  ? globSync('memory-bank/*.md', { cwd }).map(f => relative(cwd, join(cwd, f)))
   : [];
 const docSpecFiles = existsSync(join(cwd, 'docs/specs'))
   ? globSync('docs/specs/**/*.md', { cwd }).map(f => relative(cwd, join(cwd, f)))
@@ -147,7 +147,7 @@ if (jsonOut) {
   if (context.ssot.memoryBankChanged.length > 0 || context.ssot.docSpecsChanged.length > 0) {
     console.log('\n### SSOT drift indicators');
     if (context.ssot.memoryBankChanged.length > 0) {
-      console.log('  memory_bank changed:', context.ssot.memoryBankChanged.join(', '));
+      console.log('  memory-bank changed:', context.ssot.memoryBankChanged.join(', '));
     }
     if (context.ssot.docSpecsChanged.length > 0) {
       console.log('  docs/specs changed:', context.ssot.docSpecsChanged.join(', '));

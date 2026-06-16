@@ -9,7 +9,7 @@
 
 **Date:** [YYYY-MM-DD HH:MM]
 **Stage:** [Stage 1 / 2]
-**Snapshot ref:** `memory_bank/snapshots/snapshot-[wb-id]-[stage]-[date].md`
+**Snapshot ref:** `memory-bank/snapshots/snapshot-[wb-id]-[stage]-[date].md`
 **Agents completed:** N of N
 **Conflict status:** NONE / RESOLVED / ESCALATED
 

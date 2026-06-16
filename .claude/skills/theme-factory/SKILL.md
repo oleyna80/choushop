@@ -18,7 +18,7 @@ allowed-tools:
 
 Use this skill when a showcase demo site needs a theme: new demo creation, theme refresh, or generating a theme from a client's description ("I want a luxury jewelry feel").
 
-Themes are **per-demo visual identities** applied via CSS custom properties scoped to `data-demo` attribute. They must feel like the client's own brand — never like {{PROJECT_NAME}} (that's the showcase shell).
+Themes are **per-demo visual identities** applied via CSS custom properties scoped to `data-demo` attribute. They must feel like the client's own brand — never like ChouShop (that's the showcase shell).
 
 ## Contract
 
@@ -48,7 +48,7 @@ type DemoTheme = {
 
 - `showcase/lib/types.ts` — DemoTheme, DemoSite, DemoContent types
 - `showcase/lib/theme.ts` — themeToCSSVars() helper
-- `.agent/skills/brand-guidelines/SKILL.md` — {{PROJECT_NAME}} brand (for showcase shell, NOT demo interiors)
+- `.agent/skills/brand-guidelines/SKILL.md` — ChouShop brand (for showcase shell, NOT demo interiors)
 - `AGENTS.md`
 
 ---
@@ -105,9 +105,9 @@ Before accepting any theme (preset or custom):
 
 ## Relationship to Brand Guidelines
 
-- **Showcase shell** (landing, nav, footer) → uses `brand-guidelines` skill ({{PROJECT_NAME}} brand)
+- **Showcase shell** (landing, nav, footer) → uses `brand-guidelines` skill (ChouShop brand)
 - **Demo interiors** (inside `data-demo` wrapper) → uses this skill (client-facing niche themes)
-- **Never mix**: demo themes must NOT leak {{PROJECT_NAME}} colors. The shell must NOT inherit demo themes.
+- **Never mix**: demo themes must NOT leak ChouShop colors. The shell must NOT inherit demo themes.
 
 ---
 

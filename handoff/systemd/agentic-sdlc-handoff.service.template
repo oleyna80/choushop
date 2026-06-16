@@ -1,0 +1,23 @@
+[Unit]
+Description=Agentic SDLC handoff queue watcher
+Documentation=file://__FRAMEWORK_ROOT__/handoff/README.md
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=__FRAMEWORK_ROOT__
+Environment=HANDOFF_WATCH_INTERVAL=5
+Environment=HANDOFF_WATCH_STABLE_SECONDS=1
+Environment=HANDOFF_SCOPE_AUDIT=1
+EnvironmentFile=-%h/.config/agentic-sdlc-framework/handoff.env
+ExecStart=__FRAMEWORK_ROOT__/handoff/runner/watch-queue.sh
+Restart=on-failure
+RestartSec=10s
+TimeoutStopSec=30s
+KillSignal=SIGTERM
+StandardOutput=journal
+StandardError=journal
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=default.target

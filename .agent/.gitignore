@@ -1,0 +1,13 @@
+# Agent workflow scaffold is publishable in project repositories so the same
+# SDLC can be restored from another workstation. Keep only private runtime
+# state out through the root .gitignore.
+*
+!.gitignore
+!README.md
+!ROSTER.md
+!critic-gate.md
+!verification-gate.md
+!workflows/
+!workflows/**
+!skills/
+!skills/**

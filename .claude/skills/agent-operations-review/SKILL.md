@@ -52,7 +52,7 @@ recommendations only.
 Prefer sanitized and local-only evidence:
 
 - Work Block closeout summary.
-- `memory_bank/progress.md` and active tasklist delivery notes.
+- `memory-bank/progress.md` and active tasklist delivery notes.
 - `git status`, `git diff --check`, verifier output.
 - Final outcome anchors when relevant: commit hash, push result, CI run status,
   and remaining dirty/untracked files.

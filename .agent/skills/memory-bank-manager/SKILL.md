@@ -21,7 +21,7 @@ allowed-tools:
 # Memory Bank Manager
 
 ## Objective
-Keep `memory_bank/` concise and current.
+Keep `memory-bank/` concise and current.
 
 ## Protocols
 1. `context.md`: текущий фокус, рабочий scope, next step.
@@ -33,7 +33,7 @@ Keep `memory_bank/` concise and current.
 - Не дублировать один и тот же статус в разных местах.
 
 ## Handoff
-- **Success condition**: `memory_bank/context.md` и `progress.md` актуальны, нет отживших формулировок.
+- **Success condition**: `memory-bank/context.md` и `progress.md` актуальны, нет отживших формулировок.
 - **Next**: возврат Control Tower (продолжение pipeline)
 - **Auto-proceed**: 🟢 YES
 - **Hard stop**: NO

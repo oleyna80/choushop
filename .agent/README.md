@@ -1,29 +1,48 @@
-# Agent Configuration Structure
+# .agent/ - Local Agent Workflow Layer
 
-This directory is synchronized through Git by default so project-local agent
-skills, workflows, and reports are available from every workstation.
+> Local-first directory for agent skills, workflows, and routing.
+> Not published to git by default (see `.gitignore`).
 
-Do not store secrets, raw private transcripts, local runtime logs, caches,
-customer data, or machine-specific tool state here.
+## Directory Structure
 
-`AGENTS.md` remains the authoritative root contract. The `.agent/` directory is
-an index and staging area for reusable project-local roles, skills, workflows,
-and report templates.
+```
+.agent/
+├── README.md            # This file
+├── ROSTER.md            # Agent routing table + skill assignments
+├── .gitignore           # Keeps .agent/ local-only
+├── workflows/
+│   └── sdd-protocol.md  # Full SDLC stage definitions
+└── skills/              # Project-local skills
+    └── <skill-name>/
+        └── SKILL.md     # Skill definition
+```
 
-## 1. Roster (`.agent/ROSTER.md`)
+## How Skills Work
 
-Single index of roles, skills, workflows, and trigger phrases.
+Each skill is a directory under `.agent/skills/<name>/` with a `SKILL.md` file.
+Skills define: Triggers (when to use), Workflow (steps), Guardrails (constraints),
+and Handoff (output format).
 
-## 2. Skills (`.agent/skills/`)
+Claude Code loads runtime skills from `.claude/skills/<name>/`. Bootstrap copies
+the same core skills into `.agent/skills/` so the SDLC contract and other agent
+runtimes can inspect the project-neutral routing mirror.
 
-Reusable procedures for recurring ChouShop work. Keep skills lean and create
-them only when the workflow repeats.
+Agents match skills by reading their `## Triggers` or `## When to Use` sections.
+The Skill Routing Gate (`AGENTS.md`) requires recording: skills checked, matched,
+used, and skipped (with reason).
 
-## 3. Workflows (`.agent/workflows/`)
+## Finding the Right Skill
 
-Optional multi-step processes. Existing domain workflow docs currently live in
-`workflows/`; do not move or rewrite them without explicit approval.
+1. Check `.agent/ROSTER.md` for the skill routing table.
+2. Search `.agent/skills/*/SKILL.md` for matching triggers.
+3. If no local skill matches, check `AGENTS.md § External Skill Discovery`.
 
-## 4. Reports (`.agent/reports/`)
+## Adding a Skill
 
-Optional output templates for structured handoffs.
+Copy a skill directory from the framework's `skills/` library into both
+`.claude/skills/` and `.agent/skills/`, or create a new one following
+`SKILL-CONVENTION.md`.
+
+## Bootstrap
+
+Run `scripts/bootstrap.sh` to verify the workflow layer is complete.

@@ -64,7 +64,7 @@ Reviewer не инициирует Hard Stop действия. Если нахо
 | Dimension | Что проверяет |
 |-----------|--------------|
 | **code** | Баги, edge cases, error handling, reuse/simplification, pattern consistency |
-| **docs** | `docs/specs/` vs реализация, `memory_bank/` vs git state, AGENTS.md vs процесс |
+| **docs** | `docs/specs/` vs реализация, `memory-bank/` vs git state, AGENTS.md vs процесс |
 | **security** | Триаж внешних находок: `confirmed` / `partially confirmed` / `stale/resolved` / `rejected` / `needs-more-proof` |
 | **architecture** | Структура, coupling, границы ответственности |
 | **copy** | Языковая консистентность (fr/ru), пропущенные переводы, тон, placeholder-тексты |
@@ -74,7 +74,7 @@ Reviewer не инициирует Hard Stop действия. Если нахо
 
 ## Workflow
 
-0. **Сбор контекста:** `node .claude/skills/reviewer/scripts/gather-diff.mjs --json --dimension <code|docs|security|architecture|copy|drift>` — собирает git state, changed files по категориям (component/page/api/lib/config/css/docs/agent), affected routes, SSOT drift indicators (memory_bank/ docs/). Используй JSON вывод как evidence.
+0. **Сбор контекста:** `node .claude/skills/reviewer/scripts/gather-diff.mjs --json --dimension <code|docs|security|architecture|copy|drift>` — собирает git state, changed files по категориям (component/page/api/lib/config/css/docs/agent), affected routes, SSOT drift indicators (memory-bank/ docs/). Используй JSON вывод как evidence.
 1. **Чтение scope** — что ревьюить, против каких критериев
 2. **Инспекция** — чтение файлов, diff, кросс-ссылки
 3. **Формирование findings** — структурированно, с file:line evidence

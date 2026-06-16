@@ -70,7 +70,7 @@ allowed-tools:
    - `needs-more-proof`
 7. Явно зафиксировать side effects/regression risks.
 8. Передать verdict и closure matrix в Control Tower для SSOT sync.
-   Verifier может писать `memory_bank/*` или `docs/tasklist/*` только если
+   Verifier может писать `memory-bank/*` или `docs/tasklist/*` только если
    утвержденный Work Block явно включает эти artifact paths.
 
 ## Constraints

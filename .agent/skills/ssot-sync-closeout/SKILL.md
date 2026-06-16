@@ -1,6 +1,6 @@
 ---
 name: ssot-sync-closeout
-description: Точечный post-stage sync в memory_bank и tasklist без переписывания истории.
+description: Точечный post-stage sync в memory-bank и tasklist без переписывания истории.
 user-invocable: true
 allowed-tools:
   - Read
@@ -27,8 +27,8 @@ allowed-tools:
 
 ## Objective
 Поддерживать согласованность между:
-- `memory_bank/context.md`
-- `memory_bank/progress.md`
+- `memory-bank/context.md`
+- `memory-bank/progress.md`
 - `docs/tasklist/*`
 
 ## Workflow
@@ -59,7 +59,7 @@ allowed-tools:
 - Residual risks
 
 ## Handoff
-- **Success condition**: memory_bank обновлён (context, progress, decisions при наличии ADR), tasklist обновлён, нет противоречий.
+- **Success condition**: memory-bank обновлён (context, progress, decisions при наличии ADR), tasklist обновлён, нет противоречий.
 - **Next**: Control Tower (closeout report to Owner)
 - **Auto-proceed**: 🟢 YES
 - **Hard stop**: NO

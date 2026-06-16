@@ -82,7 +82,7 @@ Gradient meshes, noise textures, geometric patterns, layered transparencies, dra
 ## Relationship to Other Skills
 
 - **`theme-factory`** — provides 6 curated niche-specific presets; use as starting point for client demo sites
-- **`brand-guidelines`** — {{PROJECT_NAME}} brand for showcase shell (NOT demo interiors)
+- **`brand-guidelines`** — ChouShop brand for showcase shell (NOT demo interiors)
 - **This skill** — the design process and quality bar for ALL frontend work
 
 ---

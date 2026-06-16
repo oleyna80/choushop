@@ -1,5 +1,112 @@
 # Active Context
 
+## Session Update - 2026-06-16
+
+Stage: Full SDLC Framework Sync into ChouShop.
+Role: Coder.
+Status: framework runtime/configuration layer installed and verified without launching Claude Code.
+
+What changed:
+
+- Synchronized the updated SDLC scaffold into the project across Codex, shared agent workflow, Claude Code runtime files, handoff runner, docs templates, docs reference, and bootstrap verification.
+- Kept `memory-bank/` as the project SSOT convention and fixed bootstrap detection so it does not confuse `memory_bank/` with `memory-bank/`.
+- Exposed publishable `.agent/skills/**`, `.claude/agent-memory/**/*.md`, `.codex/*` allowlisted files, and handoff scaffold files through Git while keeping backups, local Claude runtime state, secrets, env files, and handoff runtime outputs ignored.
+- Configured `.mcp.json` to run the Codex MCP server in read-only/no-approval mode for Claude-side GPT/Codex critic and verifier usage.
+- Did not run Claude Code and did not touch product implementation files as part of this Work Block.
+
+Checks:
+
+- `scripts/bootstrap.sh` — passed; selected `memory-bank/`.
+- `bash -n` on Claude hooks, handoff runner scripts, and `scripts/bootstrap.sh` — passed.
+- Secret scan for token-like values and filled `ANTHROPIC_AUTH_TOKEN` in SDLC paths — no matches.
+- Placeholder scan for unresolved `{{PROJECT_*}}` — no matches.
+- `git diff --check` on SDLC paths — passed.
+- `git check-ignore -v` confirmed publishable skills are visible and backup files remain ignored.
+
+Next recommended action:
+
+- Stage: Real Project Work Block planning.
+- Objective: use the installed Codex SDLC layer to plan and execute the next `choushop` feature task, initially without Claude Code delegation.
+- Role: Orchestrator.
+- Expected result: a scoped Work Block with expected final result, risks, verification tier, and Codex critic handling.
+
+## Session Update - 2026-06-14
+
+Stage: Admin Role Hardening + Product CRUD with Server Actions.
+Role: Coder.
+Status: implementation complete, awaiting verification.
+
+What changed:
+
+- **Auth hardening (fail-closed):**
+  - Changed default `User.role` from `ADMIN` → `OPERATOR` in Prisma schema + migration.
+  - Added `ADMIN_EMAILS` env var allowlist — only listed emails get admin on sign-in.
+  - Non-allowlisted users must already have admin role in DB; otherwise sign-in is denied.
+  - Session callback now returns `role: null` for non-admin users (fail closed).
+- **Admin guard:** Created `src/lib/auth/require-admin.ts` — reusable server-action guard that redirects unauthenticated users to `/admin/login` and non-admin users to `/admin/unauthorized`.
+- **Unauthorized page:** New `/admin/unauthorized` page with sign-out button + back-to-login link.
+- **Server actions extracted:**
+  - `src/app/admin/products/new/actions.ts` — `createProductAction` with `requireAdmin()` + rate limiting.
+  - `src/app/admin/products/[slug]/edit/actions.ts` — `updateProductAction` with `requireAdmin()` + rate limiting.
+- **Forms refactored:**
+  - `edit-form.tsx` — client component with `useActionState`, extracted Field/Select helpers.
+  - `new/page.tsx` — now a client component with inline Field/Select (no separate form file).
+- **Zod fixes:** `nullable()` added to optional fields (`theme`, `compareAtPrice`, `sku`, `weight`) so empty form strings parse correctly.
+- **Catalog service:** `updateProduct` catch block now includes actual error message in event log.
+- **Agent/hook configs:** Various SDLC hardening updates (Codex MCP-only, critic gate write-set enforcement, etc.).
+
+Checks:
+- `npm run typecheck` — passed (0 errors).
+- `npm run lint` — passed (0 errors, 262 pre-existing warnings in skill scripts).
+
+Next recommended action:
+- Stage: Verification.
+- Objective: verify auth flow (allowlist sign-in, non-admin denial, unauthorized page), server actions (create + update with validation), and DB migration.
+- Role: Verifier.
+- Expected result: READY or BLOCKED verdict.
+
+## Session Update - 2026-06-13
+
+Stage: CC-native GPT/Codex gate friction fixes.
+Role: Coder.
+Status: hook usability fixes applied.
+
+What changed:
+
+- Narrowed the live DB hard-stop so plain `DATABASE_URL` inspection, such as grep against env examples, is not blocked.
+- Kept blocking `DATABASE_URL` when it appears in the same command segment as `prisma migrate deploy`, `prisma db push`, or `psql`.
+- Improved critic-gate write-set drift denial text so it names the missing file and the exact `Approved Write-Set` line to add.
+- Kept the work limited to agent hooks and workflow memory; no production app code, package files, schema files, commits, pushes, deploys, or migrations were changed by this session.
+
+Next recommended action:
+
+- Stage: Verification.
+- Objective: run shell syntax and hook smoke checks for DB false positives and write-set drift messaging.
+- Role: Verifier.
+- Expected result: confirm the guardrails are less noisy without weakening risky-operation blocks.
+
+## Session Update - 2026-06-13
+
+Stage: CC-native GPT/Codex SDLC hardening.
+Role: Coder.
+Status: agent workflow hardening applied.
+
+What changed:
+
+- Restricted Codex usage to the configured MCP tool path and removed project approval for direct `Bash(codex *)` execution.
+- Rewrote GPT critic/verifier and Codex verification skill docs around MCP-native, read-only advisory review.
+- Split default Stage 0.5 GPT criticism, default Stage 2 GPT verification, and optional deep Codex review into separate routing roles.
+- Hardened the critic gate so Edit/MultiEdit/Write is bound to Work Block metadata, expiry, optional session lock, and an approved write-set.
+- Marked `.codex/write-gate.md` as reference-only so it cannot be mistaken for an enforcement source.
+- Kept the work limited to agent configuration, hooks, and workflow documentation; no production app code, package files, database schema, commits, pushes, or deploys were changed by this session.
+
+Next recommended action:
+
+- Stage: Verification.
+- Objective: run JSON/shell syntax checks and inspect remaining Codex references for stale plugin/direct-shell paths.
+- Role: Verifier.
+- Expected result: confirm the MCP-only reviewer/verifier contract is internally consistent.
+
 ## Session Update - 2026-04-30
 
 Stage: Agentic SDLC Consistency Fix.

@@ -29,6 +29,8 @@ yarn-error.log*
 pnpm-debug.log*
 .pnpm-debug.log*
 logs/
+!handoff/logs/
+!handoff/logs/.gitkeep
 
 # Tests and coverage
 coverage/
@@ -46,9 +48,26 @@ coverage/
 .idea/
 .vscode/
 
-# Local agent/private config
-.codex/
-.claude/agent-memory/
+# Codex workflow layer is synchronized through Git by default.
+# Keep private runtime artifacts, secrets, and machine-specific state out of it.
+.codex/*
+!.codex/
+!.codex/config.toml
+!.codex/write-gate.md
+!.codex/AGENTS.md
+!.codex/critic.md
+!.codex/instructions.md
+!.codex/hooks/
+!.codex/hooks/stage0_write_gate.py
+.claude/**/*.backup-*
+.agent/**/*.backup-*
+.claude/backups/
+.claude/plans/
+.claude/plugins/
+.claude/shell-snapshots/
+.claude/.last-cleanup
+.claude/settings.local.json
+!.claude/settings.local.json.example
 
 # Agent/development workflow docs are synchronized through Git by default.
 # Keep only private runtime artifacts, secrets, and machine-specific state out

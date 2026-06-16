@@ -28,10 +28,10 @@ Temporary specialization — narrows focus, does not expand authority.
 
 ## Inputs / Files to Read
 - [ ] `AGENTS.md`
-- [ ] `memory_bank/context.md`
+- [ ] `memory-bank/context.md`
 - [ ] [task/spec/plan file]
 - [ ] [source files]
-- [ ] `memory_bank/snapshots/snapshot-[wb-id]-[stage]-[date].md` (if parallel dispatch — frozen system state)
+- [ ] `memory-bank/snapshots/snapshot-[wb-id]-[stage]-[date].md` (if parallel dispatch — frozen system state)
 
 ## Allowed Tools / MCP
 - Read, Bash, LSP, Grep, Glob, WebFetch, WebSearch

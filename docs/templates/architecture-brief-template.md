@@ -7,8 +7,8 @@
 [What problem does this architecture solve?]
 
 ## Context
-- **Project:** {{PROJECT_NAME}}
-- **Tech Stack:** {{TECH_STACK}}
+- **Project:** ChouShop
+- **Tech Stack:** Next.js App Router, TypeScript, Tailwind CSS, Prisma
 - **Affected Domains:** [frontend, backend, DB, infra, security, etc.]
 
 ## Requirements

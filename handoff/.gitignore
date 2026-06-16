@@ -1,0 +1,17 @@
+active/*
+done/*
+failed/*
+logs/*
+queue/*
+parallel/*
+runtime/*
+*.lock
+status.json
+
+!active/.gitkeep
+!done/.gitkeep
+!failed/.gitkeep
+!logs/.gitkeep
+!queue/.gitkeep
+!parallel/.gitkeep
+!runtime/.gitkeep

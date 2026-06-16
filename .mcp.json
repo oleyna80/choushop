@@ -2,7 +2,7 @@
   "mcpServers": {
     "codex": {
       "command": "codex",
-      "args": ["mcp-server"]
+      "args": ["--sandbox", "read-only", "--ask-for-approval", "never", "mcp-server"]
     }
   }
 }
