@@ -5,8 +5,9 @@ import { useState } from "react";
 import { ArrowLeft, CheckCircle2, Heart, ShieldCheck, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+import Image from "next/image";
+
 import { AddToCartButton } from "@/components/shop/add-to-cart-button";
-import { MysteryBoxVisual } from "@/components/shop/mystery-box-visual";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuantityStepper } from "@/components/ui/quantity-stepper";
@@ -18,7 +19,13 @@ export function CandyProductDetailPage({ product }: { product: CandyProduct }) {
   const [styleChoice, setStyleChoice] = useState(product.styles[0] ?? "Surprise");
 
   return (
-    <section className="container grid gap-10 py-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:py-16">
+    <section className="container grid gap-10 py-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:py-16 relative">
+      {/* Background Pastel Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="design-blob design-blob-pink absolute left-[-10%] top-[5%] h-[32rem] w-[32rem] opacity-65 blur-[120px] animate-float-gentle" />
+        <div className="design-blob design-blob-lilac absolute right-[-5%] top-[40%] h-[35rem] w-[35rem] opacity-55 blur-[130px] animate-float-slow" />
+      </div>
+
       <div className="grid gap-5">
         <Button asChild size="sm" variant="ghost">
           <Link href="/catalog">
@@ -27,7 +34,16 @@ export function CandyProductDetailPage({ product }: { product: CandyProduct }) {
           </Link>
         </Button>
         <div className="rounded-[var(--radius-xl)] border border-[var(--border-soft)] bg-white p-5 shadow-[var(--shadow-raised)]">
-          <MysteryBoxVisual className="min-h-[28rem] rounded-[var(--radius-xl)]" tone={product.accentTone} />
+          <div className="relative aspect-[4/3] w-full min-h-[28rem] md:aspect-square overflow-hidden rounded-[var(--radius-xl)] bg-[var(--background-soft)]">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </div>
         </div>
       </div>
 
@@ -47,7 +63,7 @@ export function CandyProductDetailPage({ product }: { product: CandyProduct }) {
           <div className="flex flex-wrap gap-2">
             {product.styles.map((style) => (
               <button
-                className={styleChoice === style ? "chip-active" : "chip"}
+                className={styleChoice === style ? "chip-active font-extrabold shadow-md transition-all duration-300 hover:scale-[1.04] active:scale-[0.97]" : "chip transition-all duration-300 hover:scale-[1.04] hover:bg-white hover:text-[var(--foreground)] hover:border-pink-300 active:scale-[0.97]"}
                 key={style}
                 onClick={() => setStyleChoice(style)}
                 type="button"

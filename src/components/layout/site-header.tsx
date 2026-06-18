@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/catalog", label: "Box" },
-  { href: "/#how-it-works", label: "Comment ca marche" },
+  { href: "/#how-it-works", label: "Comment ça marche" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" }
 ];
@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/65 bg-[rgba(255,247,251,0.82)] backdrop-blur-xl">
       <div className="bg-[var(--primary)] px-4 py-2 text-center text-xs font-black uppercase tracking-[0.12em] text-white">
-        Paiement & livraison via Vinted - Box preparee avec soin en video
+        Paiement & livraison via Vinted · Box préparée avec soin en vidéo
       </div>
       <div className="container flex min-h-[4.5rem] items-center justify-between gap-4 py-3">
         <div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ export function SiteHeader() {
 
           <div className="hidden rounded-[var(--radius-pill)] border border-white/70 bg-white/72 px-3 py-2 lg:flex">
             <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">
-              France - demande ici - paiement Vinted
+              France · Demande ici · Paiement Vinted
             </span>
           </div>
         </div>

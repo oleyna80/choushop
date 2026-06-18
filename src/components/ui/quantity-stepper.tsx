@@ -29,7 +29,7 @@ export function QuantityStepper({
     >
       <button
         aria-label="Reduire la quantite"
-        className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--foreground)] disabled:opacity-35"
+        className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--foreground)] disabled:opacity-35 transition-all duration-200 active:scale-90 hover:bg-[var(--surface-pink)] hover:text-[var(--primary)]"
         disabled={decDisabled}
         onClick={() => onChange(Math.max(min, value - 1))}
         type="button"
@@ -39,7 +39,7 @@ export function QuantityStepper({
       <span className="min-w-9 text-center text-sm font-semibold">{value}</span>
       <button
         aria-label="Augmenter la quantite"
-        className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--foreground)] disabled:opacity-35"
+        className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--foreground)] disabled:opacity-35 transition-all duration-200 active:scale-90 hover:bg-[var(--surface-pink)] hover:text-[var(--primary)]"
         disabled={incDisabled}
         onClick={() => onChange(typeof max === "number" ? Math.min(max, value + 1) : value + 1)}
         type="button"

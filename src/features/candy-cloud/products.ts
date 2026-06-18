@@ -12,6 +12,7 @@ export type CandyProduct = {
   accentTone: AccentTone;
   styles: string[];
   includes: string[];
+  image: string;
   isBestSeller?: boolean;
 };
 
@@ -37,7 +38,8 @@ export const candyProducts: CandyProduct[] = [
     category: "Mini Box",
     accentTone: "accent",
     styles: ["Pink Mood", "Cute Accessories", "Full Surprise"],
-    includes: ["1 a 2 accessoires", "1 charm ou detail cute", "Mini surprise bonus"]
+    includes: ["1 a 2 accessoires", "1 charm ou detail cute", "Mini surprise bonus"],
+    image: "/images/mini-box.png"
   },
   {
     id: "classic-mystery-box",
@@ -52,6 +54,7 @@ export const candyProducts: CandyProduct[] = [
     accentTone: "accent",
     styles: ["Pink Mood", "Jewelry", "Cute Accessories", "Sparkle"],
     includes: ["Bijoux ou charms", "Accessoires cheveux", "Papeterie cute", "Surprise bonus"],
+    image: "/images/classic-box.png",
     isBestSeller: true
   },
   {
@@ -66,7 +69,8 @@ export const candyProducts: CandyProduct[] = [
     category: "Premium Box",
     accentTone: "peach",
     styles: ["Soft Girl", "Jewelry", "Sparkle", "Full Surprise"],
-    includes: ["Selection plus complete", "Bijoux ou accessoires", "Pieces coup de coeur", "Bonus premium"]
+    includes: ["Selection plus complete", "Bijoux ou accessoires", "Pieces coup de coeur", "Bonus premium"],
+    image: "/images/premium-box.png"
   },
   {
     id: "jewelry-surprise-box",
@@ -80,7 +84,8 @@ export const candyProducts: CandyProduct[] = [
     category: "Jewelry",
     accentTone: "lavender",
     styles: ["Jewelry", "Sparkle", "Soft Girl"],
-    includes: ["Bijoux fantaisie", "Charms", "Details nacres", "Mini surprise"]
+    includes: ["Bijoux fantaisie", "Charms", "Details nacres", "Mini surprise"],
+    image: "/images/jewelry-box.png"
   },
   {
     id: "cute-accessories-box",
@@ -94,7 +99,8 @@ export const candyProducts: CandyProduct[] = [
     category: "Accessories",
     accentTone: "mint",
     styles: ["Cute Accessories", "Pink Mood", "Full Surprise"],
-    includes: ["Accessoires cheveux", "Papeterie", "Charms", "Mini gifts"]
+    includes: ["Accessoires cheveux", "Papeterie", "Charms", "Mini gifts"],
+    image: "/images/accessories-box.png"
   }
 ];
 

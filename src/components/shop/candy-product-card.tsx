@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { AddToCartButton } from "@/components/shop/add-to-cart-button";
-import { MysteryBoxVisual } from "@/components/shop/mystery-box-visual";
 import { Badge } from "@/components/ui/badge";
 import type { CandyProduct } from "@/features/candy-cloud/products";
 import { formatCandyPrice } from "@/features/candy-cloud/products";
@@ -9,8 +9,14 @@ import { formatCandyPrice } from "@/features/candy-cloud/products";
 export function CandyProductCard({ product }: { product: CandyProduct }) {
   return (
     <article className="group grid h-full gap-5 rounded-[var(--radius-lg)] border border-[var(--border-soft)] bg-white p-4 shadow-[var(--shadow-soft)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-raised)]">
-      <div className="block">
-        <MysteryBoxVisual tone={product.accentTone} />
+      <div className="relative aspect-[1.35] w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--background-soft)]">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
       </div>
 
       <div className="grid gap-3">

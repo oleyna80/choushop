@@ -50,7 +50,13 @@ export function OrderRequestPage() {
   }
 
   return (
-    <section className="container grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_25rem] lg:py-16">
+    <section className="container grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_25rem] lg:py-16 relative">
+      {/* Background Pastel Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="design-blob design-blob-pink absolute left-[-10%] top-[5%] h-[32rem] w-[32rem] opacity-65 blur-[120px] animate-float-gentle" />
+        <div className="design-blob design-blob-lilac absolute right-[-5%] top-[35%] h-[35rem] w-[35rem] opacity-55 blur-[130px] animate-float-slow" />
+      </div>
+
       <form
         className="grid gap-6 rounded-[var(--radius-xl)] border border-[var(--border-soft)] bg-white p-5 shadow-[var(--shadow-raised)] md:p-7"
         onSubmit={submitRequest}
@@ -58,16 +64,16 @@ export function OrderRequestPage() {
         <div className="grid gap-3">
           <p className="text-sm font-black uppercase tracking-[0.12em] text-[var(--primary)]">Demande</p>
           <h1 className="text-[length:var(--text-h1)]">Recevoir mon lien Vinted</h1>
-          <p className="max-w-2xl text-lg leading-8 text-[var(--text-muted)]">
-            Laisse ton contact et tes preferences. Nous t&apos;envoyons ensuite une annonce Vinted personnalisee.
+          <p className="max-w-2xl text-lg leading-8 text-[var(--text-muted)] text-pretty">
+            Laisse ton contact et tes préférences. Nous t&apos;envoyons ensuite une annonce Vinted personnalisée.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <Field label="Prenom">
-            <Input name="firstName" placeholder="Lea" required />
+          <Field label="Prénom">
+            <Input name="firstName" placeholder="Léa" required />
           </Field>
-          <Field label="Methode de contact">
+          <Field label="Méthode de contact">
             <Select defaultValue="vinted" name="contactMethod" required>
               <option value="vinted">Vinted</option>
               <option value="instagram">Instagram</option>
@@ -83,14 +89,14 @@ export function OrderRequestPage() {
           </Field>
         </div>
 
-        <Field label="Preferences">
+        <Field label="Préférences">
           <Textarea
             name="preferences"
-            placeholder="Couleurs preferees, bijoux ou accessoires, style cute, kawaii, coquette..."
+            placeholder="Couleurs préférées, bijoux ou accessoires, style cute, kawaii, coquette..."
           />
         </Field>
 
-        <label className="flex gap-3 rounded-[var(--radius-lg)] bg-[var(--surface-lilac)] p-4 font-bold leading-6">
+        <label className="flex gap-3 rounded-[var(--radius-lg)] bg-[var(--surface-lilac)] p-4 font-bold leading-6 cursor-pointer">
           <Checkbox required />
           <span>
             J&apos;ai compris que le paiement et la livraison se feront via Vinted.
