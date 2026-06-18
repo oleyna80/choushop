@@ -94,6 +94,20 @@ entries:
       - docs/session-bootstrap.md
       - memory-bank/orchestrator-log.md
 
+  docs/templates/project-agent-update-template.md:
+    role: project_agent_framework_update_template
+    status: normative
+    owner: orchestrator
+    update_when:
+      - framework update handoff requirements change
+      - project agent response contract changes
+      - manual SDLC update coordination changes
+    related:
+      - AGENTS.md
+      - PROJECT_MAP.md
+      - FILE_REGISTRY.yml
+      - docs/templates/work-block-template.md
+
   scripts/bootstrap.sh:
     role: workflow_layer_health_check
     status: normative
