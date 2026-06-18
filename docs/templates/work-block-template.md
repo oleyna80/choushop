@@ -68,6 +68,13 @@ and what must be left clean.]
 [Approved files/directories]
 ```
 
+## Navigation Impact
+- **Files added/moved/removed:** [none | list]
+- **PROJECT_MAP.md update needed:** [yes | no; why]
+- **FILE_REGISTRY.yml update needed:** [yes | no; why]
+- **Session bootstrap or profile docs update needed:** [yes | no; why]
+- **Generated/derived/local-only boundary changed:** [yes | no; why]
+
 ## Commit / Stage Scope
 - **Files to stage/commit:** [explicit list or pathspec]
 - **Files to leave unstaged:** [pre-existing dirty files, local artifacts,
@@ -160,4 +167,6 @@ lessons to fill the form.
 - **Framework updates to consider:** [future improvements not done in this WB]
 - **Reusable knowledge created:** [skill, checklist, report, memory entry, none
   / not applicable]
+- **Navigation updates:** [PROJECT_MAP.md, FILE_REGISTRY.yml, session bootstrap,
+  profile docs, none / not applicable]
 - **Follow-up Work Blocks:** [links or IDs]

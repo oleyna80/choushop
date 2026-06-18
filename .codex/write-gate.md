@@ -2,13 +2,13 @@
 
 Status: READY
 Expires: 2099-12-31
-Work Block: wb-choushop-dirty-tree-cleanup-review
-Approved Scope: Dirty-tree classification and non-destructive cleanup only. Write-set is limited to `docs/plans/2026-06-18-choushop-dirty-tree-cleanup-review.md`, `docs/reports/**`, `memory-bank/activeContext.md`, `memory-bank/orchestrator-log.md`, `memory-bank/review-log.md`, `.codex/write-gate.md`, and `.gitignore`. Risky product/backend/admin/schema/package files are read/classify-only. No deletes, `git clean`, reset, deploy, DB/provider mutation, env/secrets/config changes, payment/order/stock behavior changes, or commit/push are approved in this Work Block.
+Work Block: wb-choushop-sdlc-navigation-sync
+Approved Scope: SDLC navigation-layer sync from `agentic-sdlc-framework` commit `6fa8327` into ChouShop only. Write-set is limited to `.codex/write-gate.md`, `docs/plans/2026-06-18-choushop-sdlc-navigation-sync.md`, `docs/reports/2026-06-18-choushop-sdlc-navigation-sync.md`, `memory-bank/activeContext.md`, `memory-bank/orchestrator-log.md`, `memory-bank/review-log.md`, `FILE_REGISTRY.yml`, `PROJECT_MAP.md`, `docs/session-bootstrap.md`, `docs/templates/work-block-template.md`, and `scripts/bootstrap.sh`. Existing product/backend/admin/schema/package dirty files are read-only/deferred. No deletes, `git clean`, reset, deploy, DB/provider mutation, env/secrets/config changes, payment/order/stock behavior changes, or commit/push are approved in this Work Block.
 Codex Critic: READY
-Critic Verdict: RECONSIDER -> addressed by Stage 0 rerun
-Critic Report: subagent 019ed9e9-dac9-7090-b924-4c05c1171c33; summary in docs/reports/2026-06-18-choushop-dirty-tree-review.md
+Critic Verdict: SUPPLEMENT
+Critic Report: read-only Codex critic subagent for navigation sync; final summary to be recorded in docs/reports/2026-06-18-choushop-sdlc-navigation-sync.md
 Critic Skip Reason: N/A
-Orchestrator Response: Stage 0 was rerun before cleanup writes. The Work Block now has complete dirty-tree buckets, exact non-destructive ignore-rule whitelist, explicit read/classify-only risky paths, local-skill routing, subagent mission briefs, and tightened verification. Cleanup is limited to `.gitignore` plus docs/log/report audit trail.
+Orchestrator Response: Sync must adapt framework templates to ChouShop conventions, preserve project-specific `AGENTS.md`, keep `memory-bank/` rather than `memory_bank/`, and avoid staging unrelated product dirty files.
 Orchestrator Log: memory-bank/orchestrator-log.md
 Review Log: memory-bank/review-log.md
 

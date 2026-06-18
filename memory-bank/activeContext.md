@@ -2,6 +2,48 @@
 
 ## Session Update - 2026-06-18
 
+Stage: ChouShop SDLC navigation sync.
+Role: Orchestrator + Coder for SDLC/navigation files only.
+Status: navigation-control layer synced from `agentic-sdlc-framework` commit
+`6fa8327`; product/backend/admin/schema/package dirty files remain deferred and
+out of scope.
+
+What changed:
+
+- Pushed the previous safe audit commit `08c7dd9` before starting this Work
+  Block.
+- Created
+  `docs/plans/2026-06-18-choushop-sdlc-navigation-sync.md` and updated
+  `.codex/write-gate.md` with an SDLC-only write-set.
+- Added ChouShop-specific `PROJECT_MAP.md`, `FILE_REGISTRY.yml`, and
+  `docs/session-bootstrap.md`.
+- Updated `docs/templates/work-block-template.md` with the `Navigation Impact`
+  planning and closeout fields.
+- Updated `scripts/bootstrap.sh` so bootstrap verification requires
+  `PROJECT_MAP.md`, `FILE_REGISTRY.yml`, and `docs/session-bootstrap.md`.
+- Preserved ChouShop's `AGENTS.md` as the project authority and kept the
+  existing `memory-bank/` convention rather than copying generic
+  `memory_bank/` references from the framework template.
+
+Review result:
+
+- Codex critic verdict: SUPPLEMENT.
+- Main findings: do not overwrite project-specific `AGENTS.md`; adapt
+  framework template paths to `memory-bank/`; add navigation checks to
+  bootstrap while accounting for `.agent/project-config.md`; keep product dirty
+  files out of the SDLC commit.
+
+Next recommended action:
+
+- Stage: Verification / Commit Gate.
+- Objective: run path-limited verification for the SDLC navigation sync and
+  request Owner approval before staging/committing the SDLC-only diff.
+- Role: Verifier.
+- Expected result: synced SDLC navigation files are verified, unrelated dirty
+  files remain unstaged, and the Owner can decide whether to commit.
+
+## Session Update - 2026-06-18
+
 Stage: ChouShop dirty tree cleanup/review.
 Role: Orchestrator + Coder for documentation/ignore cleanup only.
 Status: large dirty tree classified; risky product/backend changes left
