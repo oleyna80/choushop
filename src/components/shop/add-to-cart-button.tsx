@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ShoppingBag, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/features/cart/cart-client";
@@ -25,7 +26,7 @@ export function AddToCartButton({
 
   return (
     <Button
-      className={cn("w-full", className)}
+      className={cn("w-full rounded-full bg-[#ff7aae] text-white hover:bg-[#ff5b9b] transition-transform duration-300 font-bold", className)}
       disabled={disabled}
       onClick={() => {
         addToCart(productId, quantity, styleChoice);
@@ -34,7 +35,17 @@ export function AddToCartButton({
       }}
       type="button"
     >
-      {added ? "Ajoute au panier" : label}
+      {added ? (
+        <span className="flex items-center justify-center gap-1.5 animate-pulse">
+          <Check size={16} />
+          Ajouté !
+        </span>
+      ) : (
+        <span className="flex items-center justify-center gap-2">
+          <ShoppingBag size={16} className="shrink-0" />
+          {label}
+        </span>
+      )}
     </Button>
   );
 }

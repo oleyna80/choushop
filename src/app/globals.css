@@ -2,31 +2,31 @@
 
 :root {
   --background: #fff7fb;
-  --background-soft: #fdf0f7;
-  --foreground: #2b2230;
-  --text-main: #2b2230;
-  --muted: #766a7c;
-  --text-muted: #766a7c;
-  --line: #f3d9e8;
-  --border-soft: #f3d9e8;
+  --background-soft: #ffe8f2;
+  --foreground: #684fd6;
+  --text-main: #684fd6;
+  --muted: #a788fa;
+  --text-muted: #a788fa;
+  --line: #c4b5fd;
+  --border-soft: #ffe8f2;
   --surface: #ffffff;
   --surface-soft: #fff7fb;
-  --surface-pink: #ffeaf4;
-  --surface-lilac: #f0e8ff;
-  --surface-peach: #ffe8d8;
-  --primary: #e84ba3;
-  --primary-hover: #d93693;
-  --secondary: #9b7cff;
-  --accent: #e84ba3;
-  --accent-strong: #d93693;
-  --lavender: #f0e8ff;
-  --peach: #ffb38a;
+  --surface-pink: #ffe8f2;
+  --surface-lilac: #f3e8ff;
+  --surface-peach: #fff4ea;
+  --primary: #ff7aae;
+  --primary-hover: #ff7aae;
+  --secondary: #a788fa;
+  --accent: #ff7aae;
+  --accent-strong: #ff7aae;
+  --lavender: #f3e8ff;
+  --peach: #ffd6a5;
   --mint: #b8ead9;
   --warning: #f59f5b;
   --success: #4bb889;
 
-  --font-display: var(--font-sora), "Sora", sans-serif;
-  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-display: var(--font-poppins), "Poppins", sans-serif;
+  --font-body: var(--font-poppins), "Poppins", sans-serif;
 
   --text-display: clamp(2.85rem, 7vw, 5.5rem);
   --text-h1: clamp(2.35rem, 5vw, 4.25rem);
@@ -47,15 +47,40 @@
   --radius-xl: 2.4rem;
   --radius-pill: 999px;
 
-  --shadow-soft: 0 16px 40px rgba(219, 126, 173, 0.14);
-  --shadow-raised: 0 20px 60px rgba(181, 109, 170, 0.2);
-  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 24px 70px rgba(255, 114, 165, 0.16);
+  --shadow-soft: 0 16px 40px rgba(104, 79, 214, 0.08);
+  --shadow-raised: 0 20px 60px rgba(104, 79, 214, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 24px 70px rgba(255, 122, 174, 0.1);
 
   --duration-fast: 180ms;
   --duration-base: 280ms;
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   --container-max: 1180px;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.15rem;
+  color: var(--foreground);
+  transition: all var(--duration-fast) var(--ease-soft);
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 122, 174, 0.15);
+}
+
+input[type="checkbox"] {
+  accent-color: var(--primary);
 }
 
 * {

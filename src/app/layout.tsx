@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Poppins } from "next/font/google";
 
 import "./globals.css";
 
-const sora = Sora({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-sora",
-  display: "swap"
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap"
 });
 
@@ -34,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html data-scroll-behavior="smooth" lang="fr">
-      <body className={`${sora.variable} ${inter.variable}`}>
+      <body className={`${poppins.variable}`}>
         <div className="page-shell">{children}</div>
       </body>
     </html>
