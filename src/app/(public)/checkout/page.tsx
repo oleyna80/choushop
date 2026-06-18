@@ -1,9 +1,5 @@
-import { CheckoutClientPage } from "@/features/checkout/checkout-page";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Finaliser la commande"
-};
-
-export default function CheckoutPage() {
-  return <CheckoutClientPage />;
+export default function Page() {
+  redirect("/order");
 }

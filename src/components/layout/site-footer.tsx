@@ -2,10 +2,12 @@ import Link from "next/link";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 
 const footerLinks = [
+  { href: "/catalog", label: "Box" },
+  { href: "/#how-it-works", label: "Comment ca marche" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
   { href: "/legal", label: "Mentions legales" },
-  { href: "/terms", label: "CGV" },
-  { href: "/privacy", label: "Confidentialite" },
-  { href: "/shipping-returns", label: "Livraison & retours" }
+  { href: "/privacy", label: "Confidentialite" }
 ];
 
 export function SiteFooter() {
@@ -18,30 +20,29 @@ export function SiteFooter() {
               <Sparkles size={18} />
             </span>
             <div className="grid gap-0.5">
-              <p className="font-[var(--font-display)] text-xl font-bold tracking-[-0.04em]">
+              <p className="font-[var(--font-display)] text-xl font-bold tracking-normal">
                 ChouShop
               </p>
               <p className="text-sm text-[var(--muted)]">
-                Mystery boxes cute, premium et faciles a offrir.
+                Mystery boxes cute, preparees avec soin.
               </p>
             </div>
           </div>
 
           <p className="max-w-2xl text-sm leading-7 text-[var(--muted)]">
-            Des editions pastel preparees pour faire plaisir sans rendre le
-            choix complique. Les prix affiches sont en EUR TTC et le paiement
-            passe par Stripe Checkout.
+            Choisis une box, envoie ta demande, puis finalise le paiement et
+            la livraison via une annonce Vinted personnalisee.
           </p>
 
           <div className="flex flex-wrap gap-3 text-sm text-[var(--muted)]">
             <span className="rounded-[var(--radius-pill)] border border-white/80 bg-white/82 px-4 py-2">
-              France d&apos;abord
+              France
             </span>
             <span className="rounded-[var(--radius-pill)] border border-white/80 bg-white/82 px-4 py-2">
-              Livraison suivie
+              Paiement Vinted
             </span>
             <span className="rounded-[var(--radius-pill)] border border-white/80 bg-white/82 px-4 py-2">
-              Surprise reelle
+              Preparation video
             </span>
           </div>
         </div>
@@ -62,15 +63,15 @@ export function SiteFooter() {
 
           <p className="inline-flex items-center gap-2 text-sm text-[var(--muted)]">
             <Heart size={14} />
-            Service client via la page contact.
+            Contact via Vinted, Instagram ou la page contact.
           </p>
         </div>
       </div>
 
       <div className="container mt-8 border-t border-white/70 pt-5">
         <p className="text-sm text-[var(--muted)]">
-          ChouShop presente ses box en francais, en EUR TTC, avec des editions
-          et contenus variables selon les capsules.
+          ChouShop presente ses box en francais. Aucun paiement n&apos;est pris
+          sur le site: la commande est finalisee via Vinted.
         </p>
       </div>
     </footer>

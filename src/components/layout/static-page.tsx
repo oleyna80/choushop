@@ -14,7 +14,7 @@ export function StaticPage({
     <SectionShell density="tight">
       <div className="mx-auto max-w-3xl">
         <SectionHeading
-          description="Informations essentielles pour preparer, recevoir et comprendre ta commande ChouShop."
+          description="Informations essentielles pour preparer, recevoir et comprendre ta demande ChouShop."
           eyebrow={eyebrow}
           title={title}
         />

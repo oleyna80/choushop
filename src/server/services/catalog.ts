@@ -121,12 +121,13 @@ export async function updateProduct(slug: string, input: ProductUpdateInput) {
         }),
       },
     });
-  } catch {
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : "unknown";
     await writeEvent(prisma, {
       eventType: "product.update_failed",
       entityType: "product",
       entityId: slug,
-      payloadJson: { slug, reason: "not_found" },
+      payloadJson: { slug, reason },
       source: "internal-api",
     });
     return null;

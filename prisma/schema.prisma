@@ -226,7 +226,7 @@ model User {
   id            String    @id @default(cuid())
   email         String    @unique
   emailVerified DateTime?
-  role          AdminRole @default(ADMIN)
+  role          AdminRole @default(OPERATOR)
   image         String?
   lastLoginAt   DateTime?
   createdAt     DateTime  @default(now())

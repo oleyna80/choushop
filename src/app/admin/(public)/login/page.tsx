@@ -8,7 +8,13 @@ export default async function LoginPage({
   searchParams: Promise<{ verify?: string }>;
 }) {
   const session = await auth();
-  if (session) redirect("/admin");
+  if (session) {
+    const role = (session.user as { role?: string }).role;
+    if (role === "OWNER" || role === "ADMIN") {
+      redirect("/admin");
+    }
+    // Non-admin — stay on login page so user can sign out
+  }
 
   const { verify } = await searchParams;
 

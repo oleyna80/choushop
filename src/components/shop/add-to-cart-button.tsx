@@ -11,13 +11,15 @@ export function AddToCartButton({
   quantity = 1,
   disabled = false,
   className,
-  label = "Ajouter au panier"
+  label = "Ajouter au panier",
+  styleChoice
 }: {
   productId: string;
   quantity?: number;
   disabled?: boolean;
   className?: string;
   label?: string;
+  styleChoice?: string;
 }) {
   const [added, setAdded] = useState(false);
 
@@ -26,7 +28,7 @@ export function AddToCartButton({
       className={cn("w-full", className)}
       disabled={disabled}
       onClick={() => {
-        addToCart(productId, quantity);
+        addToCart(productId, quantity, styleChoice);
         setAdded(true);
         window.setTimeout(() => setAdded(false), 1600);
       }}

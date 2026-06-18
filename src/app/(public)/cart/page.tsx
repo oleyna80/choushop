@@ -1,9 +1,11 @@
-import { CartClientPage } from "@/features/cart/cart-page";
+import type { Metadata } from "next";
 
-export const metadata = {
+import { CandyCartPage } from "@/features/candy-cloud/cart-page";
+
+export const metadata: Metadata = {
   title: "Panier"
 };
 
-export default function CartPage() {
-  return <CartClientPage />;
+export default function Page() {
+  return <CandyCartPage />;
 }

@@ -1,17 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fff8fb;
-  --foreground: #2f2441;
-  --muted: #7b708d;
-  --line: #efddea;
-  --surface: rgba(255, 255, 255, 0.92);
-  --surface-soft: rgba(255, 244, 250, 0.88);
-  --accent: #ff5fa2;
-  --accent-strong: #ff3f8f;
-  --lavender: #d8c9ff;
-  --peach: #ffd8ca;
-  --mint: #d7f4ea;
+  --background: #fff7fb;
+  --background-soft: #fdf0f7;
+  --foreground: #2b2230;
+  --text-main: #2b2230;
+  --muted: #766a7c;
+  --text-muted: #766a7c;
+  --line: #f3d9e8;
+  --border-soft: #f3d9e8;
+  --surface: #ffffff;
+  --surface-soft: #fff7fb;
+  --surface-pink: #ffeaf4;
+  --surface-lilac: #f0e8ff;
+  --surface-peach: #ffe8d8;
+  --primary: #e84ba3;
+  --primary-hover: #d93693;
+  --secondary: #9b7cff;
+  --accent: #e84ba3;
+  --accent-strong: #d93693;
+  --lavender: #f0e8ff;
+  --peach: #ffb38a;
+  --mint: #b8ead9;
   --warning: #f59f5b;
   --success: #4bb889;
 
@@ -60,9 +70,9 @@ body {
   margin: 0;
   min-height: 100svh;
   background:
-    radial-gradient(circle at top left, rgba(255, 215, 230, 0.72), transparent 34%),
-    radial-gradient(circle at top right, rgba(216, 201, 255, 0.5), transparent 28%),
-    linear-gradient(180deg, #fff9fc 0%, #fff6fb 48%, #fffdfc 100%);
+    radial-gradient(circle at top left, rgba(255, 234, 244, 0.92), transparent 34%),
+    radial-gradient(circle at top right, rgba(240, 232, 255, 0.72), transparent 28%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-soft) 48%, #fffdfc 100%);
   color: var(--foreground);
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -102,7 +112,7 @@ h6 {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.98;
   text-wrap: balance;
 }
@@ -182,6 +192,26 @@ p {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.chip,
+.chip-active {
+  min-height: 2.75rem;
+  border-radius: var(--radius-pill);
+  padding-inline: 1rem;
+  font-weight: 800;
+}
+
+.chip {
+  border: 1px solid var(--border-soft);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-muted);
+}
+
+.chip-active {
+  border: 1px solid rgba(232, 75, 163, 0.24);
+  background: var(--surface-pink);
+  color: var(--primary);
 }
 
 .glow-orb {

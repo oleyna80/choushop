@@ -37,9 +37,11 @@ export function writeCart(items: CartLineInput[]) {
   window.dispatchEvent(new Event("choushop:cart"));
 }
 
-export function addToCart(productId: string, quantity = 1) {
+export function addToCart(productId: string, quantity = 1, styleChoice?: string) {
   const current = readCart().items;
-  const existing = current.find((item) => item.productId === productId);
+  const existing = current.find(
+    (item) => item.productId === productId && item.styleChoice === styleChoice
+  );
 
   if (existing) {
     existing.quantity += quantity;
@@ -47,22 +49,32 @@ export function addToCart(productId: string, quantity = 1) {
     return;
   }
 
-  writeCart([...current, { productId, quantity }]);
+  writeCart([...current, { productId, quantity, styleChoice }]);
 }
 
-export function removeFromCart(productId: string) {
-  writeCart(readCart().items.filter((item) => item.productId !== productId));
+export function removeFromCart(productId: string, styleChoice?: string) {
+  writeCart(
+    readCart().items.filter(
+      (item) => !(item.productId === productId && item.styleChoice === styleChoice)
+    )
+  );
 }
 
-export function updateCartQuantity(productId: string, quantity: number) {
+export function updateCartQuantity(
+  productId: string,
+  quantity: number,
+  styleChoice?: string
+) {
   if (quantity <= 0) {
-    removeFromCart(productId);
+    removeFromCart(productId, styleChoice);
     return;
   }
 
   writeCart(
     readCart().items.map((item) =>
-      item.productId === productId ? { ...item, quantity } : item
+      item.productId === productId && item.styleChoice === styleChoice
+        ? { ...item, quantity }
+        : item
     )
   );
 }

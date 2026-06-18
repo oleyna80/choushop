@@ -1,90 +1,31 @@
 "use client";
 
 import { useActionState } from "react";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
-import { auth } from "@/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { productUpdateSchema } from "@/lib/validation/product";
-import { getProductBySlug, updateProduct } from "@/server/services/catalog";
+import { updateProductAction } from "./actions";
 
 type State = { error?: string; fieldErrors?: Record<string, string[]> };
 
-async function updateProductAction(
-  slug: string,
-  _prev: State,
-  formData: FormData
-): Promise<State> {
-  "use server";
-
-  const session = await auth();
-  if (!session) return { error: "Unauthorized. Please log in." };
-
-  const rl = checkRateLimit("admin:update-product");
-  if (!rl.allowed) {
-    return { error: "Rate limit exceeded. Wait 1 minute before updating." };
-  }
-
-  const raw = Object.fromEntries(formData.entries());
-  const parsed = productUpdateSchema.safeParse({
-    slug: raw.slug || undefined,
-    title: raw.title || undefined,
-    shortDescription: raw.shortDescription || undefined,
-    description: raw.description || undefined,
-    type: raw.type || undefined,
-    theme: raw.theme || undefined,
-    price: raw.price ? Number(raw.price) : undefined,
-    compareAtPrice: raw.compareAtPrice ? Number(raw.compareAtPrice) : undefined,
-    status: raw.status || undefined,
-    featured: raw.hasOwnProperty("featured") ? raw.featured === "on" : undefined,
-    stock: raw.hasOwnProperty("stock") ? Number(raw.stock) || 0 : undefined,
-    sku: raw.sku || undefined,
-    weight: raw.weight ? Number(raw.weight) : undefined,
-    images: raw.imageUrl
-      ? [{ url: raw.imageUrl as string, alt: (raw.title as string) || slug }]
-      : undefined,
-  });
-
-  if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
-  }
-
-  await updateProduct(slug, parsed.data);
-  revalidatePath("/admin/products");
-  redirect("/admin/products");
-}
-
-export default async function EditProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
-
-  if (!product) {
-    return <div className="p-10">Product not found.</div>;
-  }
-
-  return (
-    <div>
-      <h1 className="text-4xl font-black">Edit: {product.title}</h1>
-      <EditForm product={product} slug={slug} />
-    </div>
-  );
-}
-
-function EditForm({
-  product,
-  slug,
-}: {
-  product: Awaited<ReturnType<typeof getProductBySlug>> & {};
+interface Product {
   slug: string;
-}) {
+  title: string;
+  shortDescription: string;
+  description: string;
+  type: string;
+  theme?: string | null;
+  price: number;
+  compareAtPrice?: number | null;
+  status: string;
+  featured: boolean;
+  stock: number;
+  sku?: string | null;
+  weight?: number | null;
+  images: { url: string; alt: string }[];
+}
+
+export function EditForm({ product, slug }: { product: Product; slug: string }) {
   const [state, action, pending] = useActionState(
     updateProductAction.bind(null, slug),
-    {}
+    {} as State
   );
 
   return (
@@ -150,7 +91,7 @@ function EditForm({
       />
       <Field
         defaultValue={
-          product.compareAtPrice ? String(product.compareAtPrice) : ""
+          product.compareAtPrice != null ? String(product.compareAtPrice) : ""
         }
         error={state.fieldErrors?.compareAtPrice?.[0]}
         label="Compare At Price (centimes)"
@@ -189,7 +130,7 @@ function EditForm({
         name="sku"
       />
       <Field
-        defaultValue={product.weight ? String(product.weight) : ""}
+        defaultValue={product.weight != null ? String(product.weight) : ""}
         error={state.fieldErrors?.weight?.[0]}
         label="Weight (g)"
         name="weight"

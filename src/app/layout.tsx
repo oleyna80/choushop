@@ -20,8 +20,11 @@ export const metadata: Metadata = {
     default: "ChouShop Mystery Box",
     template: "%s | ChouShop"
   },
-  description: "Mystery boxes cute et soigneusement preparees en France.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000")
+  description: "Mystery boxes cute avec demande sur le site et paiement via Vinted.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
+  icons: {
+    icon: "/icon.svg"
+  }
 };
 
 export default function RootLayout({
@@ -30,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html data-scroll-behavior="smooth" lang="fr">
       <body className={`${sora.variable} ${inter.variable}`}>
         <div className="page-shell">{children}</div>
       </body>
