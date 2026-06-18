@@ -1,4 +1,16 @@
 # /home/azur/Projects/WSL/projects/choushop/.codex/config.toml
+#
+# Project-local Codex config for ChouShop.
+#
+# Do not store secrets, provider tokens, API keys, proxy URLs, or real model
+# provider credentials in this file.
+#
+# Keep real model provider settings in user-level Codex config or a private
+# project environment. Project-local config is for safe behavior toggles and
+# non-secret local policy only.
+#
+# See `framework/workflow/codex-model-routing.md` for optional model-routing
+# guidance.
 
 [features]
 multi_agent = true

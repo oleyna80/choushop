@@ -37,6 +37,10 @@ Start with the smallest mode that can safely deliver the Work Block:
   review, verification, no Claude Code delegation.
 - **Standard Codex SDLC**: full Work Block flow with reusable skills,
   critic/verifier handling, and stronger closeout evidence.
+- **Codex model routing overlay**: optional user-level Codex profiles keep
+  strong models on orchestration/critic decisions and cheaper or local models
+  on bounded executor tasks. Real provider settings stay outside this project
+  unless the Owner deliberately approves private local config.
 - **Claude Code Team Runtime**: Claude Code acts as its own local team with
   agents, hooks, skills, memory, and provider configuration.
 - **Codex -> Claude Code Handoff**: Codex delegates scoped work to Claude Code
@@ -58,6 +62,7 @@ Start with the smallest mode that can safely deliver the Work Block:
 | `docs/specs/` | normative | Product and technical specs when present. |
 | `docs/templates/` | normative | Reusable SDLC templates. |
 | `docs/design/` | reference/normative mix | Design workflow and approved design references. Check before UI work. |
+| `framework/workflow/` | reference | Project-local copies of SDLC workflow policy references that do not override project authority. |
 | `handoff/` | runtime scaffold | Codex to Claude Code queue, runner, logs, and result handoff scaffold. Runtime outputs are local state unless explicitly approved. |
 | `src/` | source | Next.js application source. Product changes require an approved Work Block. |
 | `prisma/` | source/risky | Database schema and migrations. Requires explicit Owner approval. |

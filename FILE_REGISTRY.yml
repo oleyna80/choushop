@@ -108,6 +108,19 @@ entries:
       - FILE_REGISTRY.yml
       - docs/templates/work-block-template.md
 
+  framework/workflow/codex-model-routing.md:
+    role: codex_model_routing_policy
+    status: reference
+    owner: architect
+    update_when:
+      - Codex provider or profile guidance changes
+      - Codex critic or worker model-routing rules change
+      - optional local or cheaper model usage policy changes
+    related:
+      - PROJECT_MAP.md
+      - .codex/config.toml
+      - .codex/critic.md
+
   scripts/bootstrap.sh:
     role: workflow_layer_health_check
     status: normative

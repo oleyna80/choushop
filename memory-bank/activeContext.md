@@ -2,6 +2,44 @@
 
 ## Session Update - 2026-06-18
 
+Stage: ChouShop SDLC model-routing documentation sync.
+Role: Orchestrator + Coder for SDLC/documentation files only.
+Status: latest framework documentation gap from `agentic-sdlc-framework`
+commit `6c619b2` synced into ChouShop; product/backend/admin/schema/package
+dirty files remain deferred and out of scope.
+
+What changed:
+
+- Added `framework/workflow/codex-model-routing.md` from the framework source.
+- Registered the routing overlay in `PROJECT_MAP.md` operating modes and key
+  paths.
+- Registered `framework/workflow/codex-model-routing.md` in
+  `FILE_REGISTRY.yml` as a reference policy document.
+- Added safe project-local comments to `.codex/config.toml` clarifying that
+  real provider settings, secrets, API keys, tokens, and proxy URLs must stay
+  outside this file.
+- Left framework commit `24dfa51` unapplied because it only changes
+  framework-publication validation tooling, not generated project SDLC
+  documentation.
+
+Checks:
+
+- `git diff --check` — passed.
+- Framework source comparison for `framework/workflow/codex-model-routing.md`
+  — passed.
+- Navigation search for the new model-routing references — passed.
+
+Next recommended action:
+
+- Stage: Owner Decision / Dirty Tree Split.
+- Objective: choose the next Work Block boundary for product/admin/schema/package
+  dirty tree review or implementation.
+- Role: Orchestrator.
+- Expected result: one approved scope with product files kept separate from
+  SDLC documentation.
+
+## Session Update - 2026-06-18
+
 Stage: ChouShop SDLC navigation sync.
 Role: Orchestrator + Coder for SDLC/navigation files only.
 Status: navigation-control layer synced from `agentic-sdlc-framework` commit
