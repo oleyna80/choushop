@@ -2,13 +2,13 @@
 
 Status: READY
 Expires: 2099-12-31
-Work Block: wb-candy-cloud-catalog-cc-process
-Approved Scope: Handoff task file `handoff/queue/20260617T105208Z-codex-cc-catalog-ux.md`; delegated Claude Code write-set limited to `src/features/candy-cloud/candy-pages.tsx`, optional new `src/features/candy-cloud/*catalog*` client component if required, `src/components/shop/mystery-box-visual.tsx`, `src/components/shop/candy-product-card.tsx`, `memory-bank/external-team-log.md`, `docs/reports/**`, and `.claude/agent-memory/**`. Product code outside this set, env files, secrets, package files, Prisma, migrations, admin, API, auth, checkout, orders, DB, Stripe, server code, deploy, and runtime commerce mutation are out of scope.
+Work Block: wb-choushop-dirty-tree-cleanup-review
+Approved Scope: Dirty-tree classification and non-destructive cleanup only. Write-set is limited to `docs/plans/2026-06-18-choushop-dirty-tree-cleanup-review.md`, `docs/reports/**`, `memory-bank/activeContext.md`, `memory-bank/orchestrator-log.md`, `memory-bank/review-log.md`, `.codex/write-gate.md`, and `.gitignore`. Risky product/backend/admin/schema/package files are read/classify-only. No deletes, `git clean`, reset, deploy, DB/provider mutation, env/secrets/config changes, payment/order/stock behavior changes, or commit/push are approved in this Work Block.
 Codex Critic: READY
-Critic Verdict: SUPPLEMENT
-Critic Report: subagent 019ed534-5f95-7bd3-abbf-6f2eb1381939
+Critic Verdict: RECONSIDER -> addressed by Stage 0 rerun
+Critic Report: subagent 019ed9e9-dac9-7090-b924-4c05c1171c33; summary in docs/reports/2026-06-18-choushop-dirty-tree-review.md
 Critic Skip Reason: N/A
-Orchestrator Response: Codex critic concerns addressed by including `src/components/shop/candy-product-card.tsx` for accessible visual-link naming, allowing an optional small catalog client component, requiring explicit Claude Code internal reviewer/critic/verifier process evidence, and keeping backend, commerce, env, package, Prisma, admin, API, auth, checkout, orders, DB, Stripe, server, and deploy paths forbidden.
+Orchestrator Response: Stage 0 was rerun before cleanup writes. The Work Block now has complete dirty-tree buckets, exact non-destructive ignore-rule whitelist, explicit read/classify-only risky paths, local-skill routing, subagent mission briefs, and tightened verification. Cleanup is limited to `.gitignore` plus docs/log/report audit trail.
 Orchestrator Log: memory-bank/orchestrator-log.md
 Review Log: memory-bank/review-log.md
 

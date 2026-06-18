@@ -1,3 +1,3 @@
 # GPT Critic Agent Memory
 
-No memories yet. When GPT discovers orchestrator blind spots, decision patterns missed by Claude critic, or systematic risk underestimation, they will appear here.
+- [Catalog UX WB Review](wb-catalog-ux-review.md) — Catalog filter chips interactivity, empty state, MysteryBoxVisual a11y, redundant link removal. Found: circular import risk, underspecified filter edge cases, missing design-brief check, dirty-files risk.

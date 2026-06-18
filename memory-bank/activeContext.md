@@ -1,5 +1,126 @@
 # Active Context
 
+## Session Update - 2026-06-18
+
+Stage: ChouShop dirty tree cleanup/review.
+Role: Orchestrator + Coder for documentation/ignore cleanup only.
+Status: large dirty tree classified; risky product/backend changes left
+read-only for follow-up owner decisions.
+
+What changed:
+
+- Created the Work Block
+  `docs/plans/2026-06-18-choushop-dirty-tree-cleanup-review.md` with an
+  explicit final result, dirty-tree buckets, no-delete cleanup whitelist,
+  subagent mission briefs, and verification plan.
+- Updated `.codex/write-gate.md` for this Work Block so only docs/reports,
+  memory logs, `.gitignore`, and the write gate itself are writable.
+- Ran read-only Codex subagents for docs/artifacts, frontend, backend/admin
+  risk, and critic review.
+- Added `.gitignore` entries for local review artifacts:
+  `.playwright-mcp/`, snapshot YAML, and generated screenshot filenames.
+- Wrote the consolidated dirty-tree review report at
+  `docs/reports/2026-06-18-choushop-dirty-tree-review.md`.
+
+Review result:
+
+- Docs/artifacts: keep SDLC evidence and agent-memory markdown; ignore local
+  Playwright/screenshot/snapshot artifacts.
+- Frontend: Candy Cloud public frontend appears intentional but needs an owner
+  decision before product-flow commit.
+- Backend/admin: checkout/order flow, package lockfile churn, Prisma schema and
+  migration, admin route groups, auth middleware, and require-admin guard must
+  be split into separate approved Work Blocks.
+- Codex critic: initial plan was `RECONSIDER`; Stage 0 was rerun and the WB was
+  hardened before cleanup edits continued.
+
+Next recommended action:
+
+- Stage: Owner Decision / Follow-up Planning.
+- Objective: choose the next split Work Block: docs/SDLC cleanup commit,
+  Candy Cloud product-flow decision, admin/auth/schema hardening, or dependency
+  lockfile review.
+- Role: Orchestrator.
+- Expected result: one approved scope with a clean commit boundary.
+
+## Session Update - 2026-06-17
+
+Stage: Claude Code handoff review smoke closeout.
+Role: Orchestrator + Coder for SDLC/log cleanup.
+Status: Claude Code external-team delegation was validated end-to-end through
+the handoff runner, and process findings were recorded for the next Work Block.
+
+What changed:
+
+- Ran Claude Code as a read-only external reviewer through the
+  Codex -> handoff-runner -> Claude Code -> result/log flow.
+- Confirmed runner status `complete`, exit code `0`, scope audit `passed`, and
+  external team output in `memory-bank/external-team-log.md`.
+- Fixed the external-team-log summary table formatting and replaced the
+  pending runner artifact note with the actual result/log paths.
+- Updated handoff runner scope snapshots to ignore runner-owned volatile
+  `handoff/` state so future scope-audit output focuses on project files
+  changed by the external team, not temp/runtime files.
+- Synchronized the runner-owned state exclusion and documentation back to the
+  base `agentic-sdlc-framework` copy.
+
+Review result:
+
+- Claude Code verdict: SUPPLEMENT.
+- High-priority product findings for the next product Work Block:
+  `SiteHeader`/`SiteFooter` are not wired into `layout.tsx`, and mobile
+  navigation is missing.
+- Medium findings: catalog filter chips are non-functional, footer links point
+  to missing pages, and several brief-listed components remain inline.
+- Claude Code did not use internal subagents for this read-only review. It
+  logged the rationale: no code changes and duplicate signal expected.
+
+Checks:
+
+- Claude Code ran `npx tsc --noEmit` — passed.
+- Claude Code ran `npm run lint` — passed with warnings only in
+  `.claude/skills/`.
+- Handoff runner scope audit — passed.
+- Cleanup verification should run `bash -n` on the runner and the framework
+  scope-audit regression before the next commit.
+
+Next recommended action:
+
+- Stage: Product Fix Work Block.
+- Objective: close the high-priority Candy Cloud findings from the Claude Code
+  review, starting with `SiteHeader`/`SiteFooter` wiring and mobile navigation.
+- Role: Orchestrator.
+- Expected result: public frontend shell renders consistently on desktop and
+  mobile, with product code changes kept separate from SDLC cleanup.
+
+## Session Update - 2026-06-16
+
+Stage: Candy Cloud public frontend implementation.
+Role: Coder + Verifier.
+Status: public prototype flow implemented and verified with Codex-only SDLC; Claude Code was not used.
+
+What changed:
+
+- Rebuilt the public storefront around the Candy Cloud Mystery Box brief and sketch reference as a componentized Next.js + TypeScript + Tailwind system.
+- Added mock Candy Cloud product data, visual product cards, mystery-box visual components, catalog/detail/cart/order/success/design pages, and public route aliases from the old shop/product/checkout/success paths.
+- Updated global visual tokens, header, footer, mobile navigation, metadata, sitemap, and favicon for the Vinted-based request flow.
+- Extended the client cart model with optional `styleChoice` so product/style variants are tracked correctly.
+- Kept admin/auth/Prisma/package/backend/payment implementation out of scope; existing dirty files in those areas were not modified by this Work Block.
+
+Checks:
+
+- `npm run typecheck` — passed.
+- `npm run lint` — passed with 262 warnings in synchronized `.agent/.claude` skill scripts; no storefront errors.
+- `npx next build` — passed.
+- Browser smoke via Playwright wrapper — passed for `/catalog` add-to-cart, `/cart` line item + 9,90 EUR total, `/order` form, and `/order/success`.
+
+Next recommended action:
+
+- Stage: Review/Commit Gate.
+- Objective: review the focused storefront diff against unrelated dirty files, then commit/push only the approved Work Block files.
+- Role: Orchestrator.
+- Expected result: clean separation between Candy Cloud frontend changes and pre-existing admin/backend/config changes.
+
 ## Session Update - 2026-06-16
 
 Stage: Full SDLC Framework Sync into ChouShop.

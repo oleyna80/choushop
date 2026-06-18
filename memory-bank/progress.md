@@ -41,13 +41,18 @@ Status values:
 
 | Page | Status | Notes |
 |---|---|---|
-| `/` | done | New modular homepage implemented with mock data and pastel storefront system |
-| `/shop` | done | Editorial catalog page implemented with upgraded product grid/cards and mocked filters |
-| `/product/[slug]` | done | Product detail template implemented with gallery, sticky buy surface, trust cues, and FAQ |
-| `/cart` | done | Restyled client-side cart with reusable summary and line-item components |
-| `/checkout` | done | Mobile-first checkout UI implemented on top of existing POST target and CGV flow |
-| `/success` | in progress | No side effects |
-| `/cancel` | in progress | Payment cancelled UX |
+| `/` | done | Candy Cloud homepage implemented from brief/sketch as componentized pastel storefront |
+| `/catalog` | done | Candy Cloud catalog with mock products, style filters, product cards, and add-to-cart |
+| `/products/[slug]` | done | Candy Cloud product detail with visual gallery, style choice, trust cues, and cart CTA |
+| `/cart` | done | Client-side Vinted request cart with style-aware line items and indicative total |
+| `/order` | done | Prototype request form; no card payment or backend order submission |
+| `/order/success` | done | Prototype confirmation page; explicitly no real request was sent |
+| `/shop` | done | Redirect alias to `/catalog` |
+| `/product/[slug]` | done | Redirect alias to `/products/[slug]` |
+| `/checkout` | done | Redirect alias to `/order` |
+| `/success` | done | Redirect alias to `/order/success` |
+| `/cancel` | done | Non-finalized request UX, no payment wording |
+| `/design` | done | Design-system reference page for Candy Cloud components |
 | `/faq` | in progress | Final copy pending |
 | `/contact` | in progress | Final support email pending |
 | `/legal` | in progress | Go-live blocker |

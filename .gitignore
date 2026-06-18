@@ -36,6 +36,18 @@ logs/
 coverage/
 .nyc_output/
 .playwright-cli/
+.playwright-mcp/
+
+# Local review snapshots/screenshots
+catalog-snapshot.yml
+*-snapshot.yml
+homepage.png
+homepage-final.png
+choushop-homepage.png
+catalog.png
+cart.png
+order.png
+product-mini.png
 
 # Caches
 .turbo/
