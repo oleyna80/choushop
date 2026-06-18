@@ -92,6 +92,20 @@ with sync_playwright() as p:
 ❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps
 ✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection
 
+## Frontend Browser Smoke Notes
+
+- For frontend Work Blocks, record the exact smoke surface: viewport, route,
+  action, expected visual or DOM result, and screenshot/log artifact when useful.
+- If using a persistent Playwright CLI wrapper, prefer its `open` command for
+  the first navigation in a browser session. Use `goto` only when intentionally
+  navigating an already-initialized session because it may assume existing
+  session storage/state.
+- Treat `.playwright-cli/` as a local tool artifact. It should be ignored by
+  project `.gitignore` files unless the project has a deliberate reason to
+  version browser automation state.
+- Browser smoke complements, but does not replace, repository canonical checks
+  such as typecheck, lint, tests, and build.
+
 ## Best Practices
 
 - **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. 

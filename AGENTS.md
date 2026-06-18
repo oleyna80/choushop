@@ -140,6 +140,31 @@ Read-only phases must not update memory-bank files. If these instructions would 
 - Store tax snapshots on orders and order items.
 - Do not load GA4, Meta Pixel, or TikTok Pixel before cookie consent.
 
+## Runtime Data Mutation Boundary
+
+Agents are planners and code authors, not trusted runtime executors for
+commerce data. In product/runtime flows, an agent may propose a structured
+action, prepare a draft, summarize data, or request a read-only view through an
+approved API. It must not directly write to Neon/PostgreSQL, Stripe, order
+state, stock, users/roles, CRM-like records, production config, or external
+provider state.
+
+Runtime mutations must follow this boundary:
+
+1. Agent proposes an `ActionSpec` or equivalent structured request.
+2. Backend validates user/session authority, resource scope, payload shape,
+   pricing, stock, payment state, and business invariants.
+3. Policy logic decides `deny`, `read-only`, `requires_approval`, or
+   `execute`.
+4. Risky mutations show a concrete diff/preview and collect user/admin
+   approval.
+5. Backend service/repository code executes the operation in the expected
+   transaction, idempotency, event-log, and audit context.
+
+Prompt instructions are not a security boundary. Tool availability, direct DB
+credentials, or model capability do not authorize agent-side DB/provider
+mutation.
+
 ## Forbidden Patterns
 
 - Custom card payment form for MVP-0.
@@ -155,6 +180,8 @@ Read-only phases must not update memory-bank files. If these instructions would 
 - Adding customer accounts in MVP-0.
 - Adding separate backend or microservices in MVP-0.
 - Giving future agents direct unrestricted database write access.
+- Letting an agent execute raw SQL or mutate order/payment/stock/customer data
+  outside the backend service layer.
 - Shipping with placeholder legal pages.
 
 ## Project Structure

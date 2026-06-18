@@ -25,6 +25,13 @@ and what must be left clean.]
 - [ ] [Measurable completion condition 2]
 - [ ] [Repo/runtime state is clean or documented]
 
+## Preflight State
+- **Git baseline:** [clean | dirty; command and summary]
+- **Pre-existing dirty files:** [none | list files and owner/status]
+- **Untracked local artifacts:** [none | list ignored/untracked artifacts]
+- **Proceed rule:** [why this Work Block can proceed without touching unrelated
+  changes, or what must be resolved first]
+
 ## Dependency Check
 ### Must Resolve Before Start
 - [Dependency, permission, credential, access, design, or decision required
@@ -33,6 +40,21 @@ and what must be left clean.]
 ### Can Resolve During Work
 - [Non-blocking uncertainty the Orchestrator may solve without pausing unless
   it hits a Hard Stop]
+
+## Runtime / Data Mutation Boundary
+- **Applies:** [yes | no; required for DB, payment, order, stock, CRM, live
+  service, or production data changes]
+- **Agent authority:** [planner/draft/read-only only | approved code authoring
+  only | not applicable]
+- **Structured action:** [ActionSpec/resource/operation/scope/risk, or not
+  applicable]
+- **Trusted executor:** [backend service/API/repository/job that performs the
+  mutation, or not applicable]
+- **Policy and approval:** [deny/read-only/requires approval/execute rules]
+- **Audit path:** [where proposed action, policy decision, approval, executor,
+  and result are logged]
+- **Forbidden direct path:** [raw SQL/manual row mutation/unrestricted provider
+  API/direct agent tool call, or not applicable]
 
 ## Scope
 ### In Scope
@@ -45,6 +67,13 @@ and what must be left clean.]
 ```
 [Approved files/directories]
 ```
+
+## Commit / Stage Scope
+- **Files to stage/commit:** [explicit list or pathspec]
+- **Files to leave unstaged:** [pre-existing dirty files, local artifacts,
+  generated output, secrets]
+- **Scope guard:** [command/check used before staging, for example
+  `git diff --name-only` and `git status --short`]
 
 ## Acceptance Criteria
 - [ ] [AC 1]
@@ -66,6 +95,12 @@ and what must be left clean.]
 - **Classification:** [Subagent-Required | Single-Agent]
 - **Triggers matched:** [list]
 - **Use Claude Code team:** [yes | no | conditional; why]
+- **Claude Code process scope:** [not applicable | include internal CC logs and
+  memory in write-set/allowed_scope: `memory-bank/orchestrator-log.md`,
+  `memory-bank/review-log.md`, `.agent/critic-gate.md`,
+  `.agent/verification-gate.md`, `.claude/agent-memory/**`]
+- **Claude Code external report:** [not applicable |
+  `memory-bank/external-team-log.md` entry required]
 - **Use Codex/GPT critic or verifier:** [yes | no | conditional; why]
 - **Dispatch plan:** [agents, order, parallel groups]
 - **Budget posture:** [normal | cheap CC/DeepSeek OK | constrained]
@@ -78,7 +113,15 @@ and what must be left clean.]
 - **Skipped:** [list with reasons]
 
 ## Verification Plan
-[How will the AC be verified? What evidence is expected?]
+- **Canonical checks:** [exact commands expected for this repository and
+  Verification Tier]
+- **Scoped fallback checks:** [acceptable narrower checks if canonical checks
+  are blocked or disproportionate]
+- **Browser smoke:** [required pages/flows/screenshots for frontend work, or
+  not applicable]
+- **Evidence expected:** [logs, screenshots, command output, reports, result
+  files]
+- **Skipped checks:** [none | checks skipped with reason and residual risk]
 
 ## Rollback / Recovery
 [How to undo if this goes wrong?]

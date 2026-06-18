@@ -35,6 +35,7 @@ logs/
 # Tests and coverage
 coverage/
 .nyc_output/
+.playwright-cli/
 
 # Caches
 .turbo/

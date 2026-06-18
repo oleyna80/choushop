@@ -28,6 +28,7 @@ DEFAULT_TIMEOUT_SECONDS="${HANDOFF_TIMEOUT_SECONDS:-1800}"
 TIMEOUT_KILL_AFTER="${HANDOFF_TIMEOUT_KILL_AFTER:-30s}"
 DEFAULT_MAX_BUDGET_USD="${HANDOFF_CLAUDE_MAX_BUDGET_USD:-0.50}"
 SCOPE_AUDIT_ENABLED="${HANDOFF_SCOPE_AUDIT:-1}"
+SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS="${HANDOFF_SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS:-1}"
 RUNTIME_GUARD_ENABLED="${HANDOFF_RUNTIME_GUARD:-1}"
 REQUIRE_SCOPE_RULES="${HANDOFF_REQUIRE_SCOPE_RULES:-0}"
 ALLOW_DANGEROUS_PROJECT_ROOTS="${HANDOFF_ALLOW_DANGEROUS_PROJECT_ROOTS:-0}"
@@ -221,6 +222,9 @@ collect_project_snapshot() {
       while IFS= read -r -d '' path; do
         [ "$path" = "." ] && continue
         rel="${path#./}"
+        if snapshot_path_should_skip "$rel"; then
+          continue
+        fi
 
         if [ -L "$path" ]; then
           target="$(readlink "$path" 2>/dev/null || printf 'unreadable')"
@@ -229,12 +233,52 @@ collect_project_snapshot() {
           fingerprint="$(cksum < "$path" 2>/dev/null || printf 'unreadable')"
           printf 'F\t%s\t%s\n' "$rel" "$fingerprint"
         elif [ -d "$path" ]; then
-          printf 'D\t%s\t-\n' "$rel"
+          continue
         else
           printf 'O\t%s\t-\n' "$rel"
         fi
       done | LC_ALL=C sort
   ) > "$output_file"
+}
+
+path_is_same_or_under() {
+  local path="$1"
+  local base="$2"
+
+  [ -n "$base" ] || return 1
+  case "$path" in
+    "$base"|"$base"/*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+snapshot_path_should_skip() {
+  local relative_path="$1"
+  local absolute_path="$PROJECT_ROOT/$relative_path"
+
+  # Ignore only runner-owned files for the current task. Do not blanket-ignore
+  # handoff/queue, handoff/done, or handoff/failed; those are control-plane
+  # paths and unexpected writes there must still be audited.
+  [ -n "${LOG_FILE:-}" ] && [ "$absolute_path" = "$LOG_FILE" ] && return 0
+  [ -n "${STATUS_FILE:-}" ] && [ "$absolute_path" = "$STATUS_FILE" ] && return 0
+  [ -n "${LOCK_FILE:-}" ] && [ "$absolute_path" = "$LOCK_FILE" ] && return 0
+  [ -n "${RUNTIME_TASK_DIR:-}" ] && path_is_same_or_under "$absolute_path" "$RUNTIME_TASK_DIR" && return 0
+
+  return 1
+}
+
+scope_audit_path_should_ignore_after_forbidden() {
+  local relative_path="$1"
+
+  if [ "$SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS" = "1" ]; then
+    case "$relative_path" in
+      .next|.next/*|tsconfig.tsbuildinfo)
+        return 0
+        ;;
+    esac
+  fi
+
+  return 1
 }
 
 changed_paths_from_snapshots() {
@@ -427,12 +471,17 @@ run_scope_audit() {
   collect_project_snapshot "$PROJECT_ROOT" "$SCOPE_SNAPSHOT_AFTER_FILE"
   mapfile -t after_paths < <(changed_paths_from_snapshots "$SCOPE_SNAPSHOT_BEFORE_FILE" "$SCOPE_SNAPSHOT_AFTER_FILE")
   for path in "${after_paths[@]}"; do
-    SCOPE_AUDIT_CHANGED_PATHS+=("$path")
-
     if path_matches_any_pattern "$path" "${FORBIDDEN_SCOPE[@]}"; then
+      SCOPE_AUDIT_CHANGED_PATHS+=("$path")
       SCOPE_AUDIT_VIOLATIONS+=("forbidden_scope:$path")
       continue
     fi
+
+    if scope_audit_path_should_ignore_after_forbidden "$path"; then
+      continue
+    fi
+
+    SCOPE_AUDIT_CHANGED_PATHS+=("$path")
 
     if [ "${#ALLOWED_SCOPE[@]}" -gt 0 ] && ! path_matches_any_pattern "$path" "${ALLOWED_SCOPE[@]}"; then
       SCOPE_AUDIT_VIOLATIONS+=("outside_allowed_scope:$path")
@@ -650,6 +699,7 @@ STARTED_AT="$(now_utc)"
   printf 'runtime_tmp_dir=%s\n' "$RUNTIME_TMP_DIR"
   append_list_to_log "runtime_guard_violations" "${RUNTIME_GUARD_VIOLATIONS[@]}"
   printf 'scope_audit_enabled=%s\n' "$SCOPE_AUDIT_ENABLED"
+  printf 'scope_audit_ignore_build_artifacts=%s\n' "$SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS"
   printf 'default_forbidden_scope_enabled=%s\n' "$DEFAULT_FORBIDDEN_SCOPE_ENABLED"
   append_list_to_log "allowed_scope" "${ALLOWED_SCOPE[@]}"
   append_list_to_log "forbidden_scope" "${FORBIDDEN_SCOPE[@]}"

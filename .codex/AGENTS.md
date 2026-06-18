@@ -77,6 +77,17 @@ Approval rules:
 - Do not proceed with production/risky changes without explicit Owner approval.
 - Always stop for approval before: production code changes outside approved scope, architecture changes outside approved scope, database/schema/migration changes, new dependencies, config/secrets/env changes, deploys, payment/checkout/order changes, destructive operations, commit or push (unless explicitly approved).
 
+Runtime data mutation boundary:
+- Codex may plan, review, draft, and implement approved backend code paths, but
+  it is not a trusted runtime executor for commerce data.
+- Codex must not directly write to Neon/PostgreSQL, Stripe, order state, stock,
+  users/roles, production config, or external provider state.
+- Runtime mutations must flow through structured action/proposal, backend
+  policy, approval when needed, service/repository executor, transaction or
+  idempotency handling, event/audit logging, and verification evidence.
+- Prompt instructions, available shell tools, DB credentials, or model
+  capability never authorize direct DB/provider mutation.
+
 Autonomous Execution Mode:
 - If the Owner explicitly approves an autonomous execution plan, continue through the approved stages without asking for confirmation after every small subtask.
 - Stay strictly within the approved scope.

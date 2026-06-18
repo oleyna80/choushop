@@ -50,6 +50,10 @@ project_root: /path/to/project
 allowed_scope:
   - memory-bank/**
   - src/**
+  # Optional when Claude Code runs as a full independent team.
+  - .agent/critic-gate.md
+  - .agent/verification-gate.md
+  - .claude/agent-memory/**
 forbidden_scope:
   - .env
   - secrets/**
@@ -80,6 +84,21 @@ run, subagents or critic/reviewer passes used, skipped review reason if any,
 runner result/log linkage, blockers, risks, and follow-up. Do not log private
 chain-of-thought, secrets, raw environment values, or full command transcripts.
 
+Claude Code Process Scope:
+
+When Claude Code acts as an independent team, it can legitimately update its
+own process files: `memory-bank/orchestrator-log.md`,
+`memory-bank/review-log.md`, `.agent/critic-gate.md`,
+`.agent/verification-gate.md`, and `.claude/agent-memory/**`. Include these
+paths in `allowed_scope` for tasks that require CC orchestrator/critic/verifier
+evidence. These files are the team's internal audit trail. The external
+contract remains `memory-bank/external-team-log.md`, plus the runner result and
+technical log under `handoff/failed|done/` and `handoff/logs/`.
+
+Do not confuse CC process files with runner-owned volatile state. Runner-owned
+handoff paths are excluded by the dispatcher; CC process files are project
+files and must be explicitly allowed when expected.
+
 # Response Contract
 
 Print status, actions taken, changed files, checks, risks, next step, and the
@@ -109,6 +128,25 @@ filesystem snapshot of `project_root` before and after Claude Code runs, then
 compares the snapshots. The audit excludes `.git/` but includes ignored
 local-first paths such as `.agent/`, `.codex/`, `.claude/agent-memory/`, and
 `memory-bank/`.
+
+The audit excludes only runner-owned volatile files for the current run: the
+current session log, status file, lock file, and current task runtime directory.
+It does not blanket-exclude `handoff/queue/`, `handoff/done/`,
+`handoff/failed/`, or `handoff/active/`; unexpected writes there are
+control-plane changes and remain subject to `allowed_scope` and
+`forbidden_scope`.
+
+By default the audit also ignores local build artifacts that are commonly
+created by verification commands and should not be reviewed as source changes:
+`.next/**` and `tsconfig.tsbuildinfo`. Set
+`HANDOFF_SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS=0` when a project needs to audit
+those files explicitly. `forbidden_scope` is evaluated before this default
+artifact ignore, so explicitly forbidden build artifacts still fail the run.
+
+Claude Code internal process files are not runner-owned volatile state. If a
+task expects CC to use its own orchestrator, critics, verifiers, hooks, or
+agent memory, explicitly include the corresponding project paths in
+`allowed_scope`; otherwise the run should fail as `scope_failed`.
 
 This means `.gitignore` does not hide files from enforcement. A task that
 changes any path outside `allowed_scope`, or any path matching
@@ -210,6 +248,7 @@ HANDOFF_WATCH_INTERVAL=2 handoff/runner/watch-queue.sh
 HANDOFF_WATCH_STABLE_SECONDS=1 handoff/runner/watch-queue.sh --once
 HANDOFF_RUNNER=/path/to/fake-runner handoff/runner/watch-queue.sh --once
 HANDOFF_SCOPE_AUDIT=0 handoff/runner/handoff-runner.sh handoff/queue/task.md
+HANDOFF_SCOPE_AUDIT_IGNORE_BUILD_ARTIFACTS=0 handoff/runner/handoff-runner.sh handoff/queue/task.md
 HANDOFF_REQUIRE_SCOPE_RULES=1 handoff/runner/handoff-runner.sh handoff/queue/task.md
 HANDOFF_STATUS_FILE=/tmp/handoff-status.json handoff/runner/handoff-runner.sh handoff/queue/task.md
 HANDOFF_RUNNER=/path/to/fake-runner handoff/runner/parallel-runner.sh handoff/queue/a.md handoff/queue/b.md
@@ -376,9 +415,10 @@ window.
 list is present in the task frontmatter.
 
 - The `project_root` must be a Git work tree for scoped tasks.
-- The runner captures Git-visible changed paths before Claude starts.
-- After Claude exits, the runner audits new changed paths from
-  `git status --porcelain --untracked-files=all`.
+- The runner captures a filesystem snapshot before Claude starts.
+- After Claude exits, the runner compares before/after snapshots, including
+  ignored local-first files but excluding only current runner-owned handoff
+  state.
 - `forbidden_scope` wins over `allowed_scope`.
 - If `allowed_scope` is non-empty, each new changed path must match at least one
   allowed pattern.
@@ -389,13 +429,13 @@ Patterns are Bash glob patterns relative to `project_root`, for example
 `src/**`, `memory-bank/**`, `.env`, or `secrets/**`. Absolute patterns are also
 accepted and matched against the absolute changed path.
 
-This is an audit layer, not an OS sandbox. It detects Git-visible file changes
-after the Claude Code process exits. It intentionally ignores changes that were
-already dirty before the task started to avoid failing on unrelated local work.
+This is an audit layer, not an OS sandbox. It detects filesystem changes after
+the Claude Code process exits, including local-first ignored files. It
+intentionally ignores changes that were already dirty before the task started to
+avoid failing on unrelated local work.
 
 ## Current Limits
 
-- Scope audit requires Git and does not inspect untracked files ignored by Git.
 - Scope audit does not prove whether Claude touched a file that was already
   dirty before the run.
 - Runtime guard is a preflight and process-hardening layer, not a kernel or
