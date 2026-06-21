@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Poppins, Pacifico } from "next/font/google";
+import { Outfit, Inter, Pacifico } from "next/font/google";
 
 import "./globals.css";
 
-const poppins = Poppins({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-poppins",
+  variable: "--font-outfit",
+  display: "swap"
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap"
 });
 
@@ -36,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html data-scroll-behavior="smooth" lang="fr">
-      <body className={`${poppins.variable} ${pacifico.variable}`}>
+      <body className={`${outfit.variable} ${inter.variable} ${pacifico.variable}`}>
         <div className="page-shell">{children}</div>
       </body>
     </html>

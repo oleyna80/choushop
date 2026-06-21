@@ -8,6 +8,7 @@ import {
   Heart,
   MessageCircle,
   PackageCheck,
+  Sparkles,
   ShieldCheck,
   Video,
   ShoppingBag,
@@ -52,63 +53,45 @@ const steps = [
 ];
 
 export function CandyHomePage() {
-  const featured = candyProducts
-    .filter((product) => product.isBestSeller)
-    .concat(candyProducts.filter((product) => !product.isBestSeller))
-    .slice(0, 3);
+  const homeProductOrder = [
+    "classic-mystery-box",
+    "mini-mystery-box",
+    "premium-mystery-box",
+    "cute-accessories-box",
+    "jewelry-surprise-box"
+  ];
+  const featured = homeProductOrder
+    .map((id) => candyProducts.find((product) => product.id === id))
+    .filter((product): product is (typeof candyProducts)[number] => Boolean(product));
 
   return (
     <>
-      {/* Background Pastel Blobs */}
-      <div className="absolute inset-x-0 top-0 overflow-hidden pointer-events-none -z-10 h-[200vh]">
-        <div className="design-blob design-blob-pink absolute -left-20 -top-20 h-[35rem] w-[35rem] opacity-75 blur-[120px] animate-float-slow" />
-        <div className="design-blob design-blob-lilac absolute right-[-10%] top-[10%] h-[40rem] w-[40rem] opacity-65 blur-[130px] animate-float-gentle" />
-        <div className="design-blob design-blob-peach absolute left-[20%] top-[45%] h-[30rem] w-[30rem] opacity-55 blur-[110px] animate-float-delayed" />
-      </div>
+      <section className="relative isolate overflow-hidden px-4 pb-10 pt-6 md:px-8 md:pb-16 lg:pt-10">
+        <div className="candy-sparkle candy-sparkle-pink left-[4%] top-[18%]" />
+        <div className="candy-sparkle candy-sparkle-lilac right-[9%] top-[13%]" />
+        <div className="candy-sparkle candy-sparkle-peach left-[42%] top-[25%]" />
 
-      <section className="relative overflow-hidden px-4 pb-16 pt-10 md:px-8 md:pb-24">
-        {/* Floating stars & pluses decoration */}
-        <div className="absolute left-[5%] top-[18%] hidden lg:block animate-float-slow opacity-35 text-[#ff7aae]">
-          <span className="text-3xl font-light">+</span>
-        </div>
-        <div className="absolute right-[50%] top-[8%] hidden lg:block animate-float-gentle opacity-25 text-[#a788fa]">
-          <span className="text-2xl font-light">+</span>
-        </div>
-        <div className="absolute left-[40%] bottom-[12%] hidden lg:block animate-float-delayed opacity-30 text-[#ffd6a5]">
-          <span className="text-2xl font-light">+</span>
-        </div>
-        <div className="absolute right-[4%] top-[40%] hidden lg:block animate-float-slow opacity-40 text-[#ff7aae] animate-sparkle">
-          <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-          </svg>
-        </div>
-        <div className="absolute left-[3%] bottom-[32%] hidden lg:block animate-float-delayed opacity-35 text-[#a788fa] animate-sparkle">
-          <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-            <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-          </svg>
-        </div>
-
-        <div className="mx-auto grid max-w-7xl gap-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[minmax(0,1.1fr)_minmax(25rem,0.9fr)] lg:items-center">
-          <div className="grid gap-7">
+        <div className="mx-auto grid max-w-7xl gap-6 sm:gap-8 lg:min-h-[40rem] lg:grid-cols-[minmax(0,0.9fr)_minmax(28rem,1.1fr)] lg:items-center">
+          <div className="grid gap-5 sm:gap-6">
             <div>
-              <Badge variant="accent">ChouShop / Soft Surprise</Badge>
+              <Badge variant="accent">ChouShop / Candy Cloud</Badge>
             </div>
             <div className="grid gap-5">
-              <h1 className="max-w-4xl text-[length:clamp(3.2rem,5.5vw,5rem)] font-[800] leading-[1.05] tracking-tight text-[#684fd6]">
-                Ta Mystery Box cute, préparée{" "}
-                <span className="text-[#ff7aae] relative inline-block whitespace-nowrap">
-                  juste pour toi
-                  <span className="absolute -right-8 top-1 text-[#ff7aae] animate-sparkle text-3xl">✨</span>
+              <h1 className="max-w-3xl text-[length:clamp(3rem,6.6vw,5.8rem)] font-black leading-[0.96] text-[#19104f]">
+                Des surprises qui te{" "}
+                <span className="relative inline-block text-[#e92876]">
+                  ressemblent
+                  <Sparkles className="absolute -right-7 -top-3 h-6 w-6 text-[#ffb34e]" />
                 </span>
               </h1>
-              <p className="max-w-xl text-lg leading-8 text-[#a788fa] text-pretty">
-                Choisis ton style, ajoute tes box au panier, puis reçois un lien Vinted sécurisé pour finaliser ta commande.
+              <p className="max-w-lg text-base font-semibold leading-7 text-[#34276f] text-pretty sm:text-lg sm:leading-8">
+                Mystery boxes pour les filles de 14 à 16 ans, avec une sélection douce, rose et pleine de surprises.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/catalog"
-                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#ff7aae] px-8 text-base font-bold text-white shadow-md hover:-translate-y-0.5 hover:bg-[#ff5b9b] transition-all"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#ff7aae] px-8 text-base font-bold !text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-[#ff5b9b]"
               >
                 Choisir ma box
                 <ArrowRight size={18} />
@@ -121,8 +104,7 @@ export function CandyHomePage() {
               </Link>
             </div>
 
-            {/* Check features list */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-4 text-xs font-bold text-[#684fd6] uppercase tracking-wider">
+            <div className="mt-3 hidden max-w-2xl gap-3 text-xs font-black uppercase tracking-[0.08em] text-[#20165b] sm:grid sm:grid-cols-3">
               <span className="flex items-center gap-2">
                 <ShieldCheck size={16} className="text-[#ff7aae]" />
                 Paiement sécurisé via Vinted
@@ -138,41 +120,41 @@ export function CandyHomePage() {
             </div>
           </div>
 
-          <div className="relative rounded-[var(--radius-xl)] border border-[#ffe8f2] bg-white p-5 shadow-[var(--shadow-raised)] transition-all duration-500 hover:shadow-[0_30px_70px_rgba(104,79,214,0.18)] aspect-square overflow-hidden">
-            {/* Floating Tags */}
-            <div className="absolute left-8 top-8 z-10 rounded-[var(--radius-pill)] bg-white px-4 py-2 text-sm font-bold text-[#ff7aae] shadow-[var(--shadow-soft)] animate-float-gentle border border-[#ffe8f2]">
+          <div className="relative mx-auto aspect-[1.1] w-full max-w-[42rem]">
+            <div className="absolute inset-x-4 bottom-2 h-24 rounded-[50%] bg-[#f4d8ff] opacity-70 blur-2xl" />
+            <div className="absolute -left-4 bottom-10 hidden h-24 w-32 rounded-full bg-white/70 md:block" />
+            <div className="absolute right-0 bottom-14 hidden h-28 w-40 rounded-full bg-white/70 md:block" />
+            <div className="absolute left-6 top-14 z-10 rounded-[var(--radius-pill)] border border-[#ffd3e4] bg-white px-4 py-2 text-sm font-black text-[#ff4f92] shadow-[var(--shadow-soft)] animate-float-gentle">
               surprise
             </div>
-            <div className="absolute right-8 top-16 z-10 rounded-[var(--radius-pill)] bg-white px-4 py-2 text-sm font-bold text-[#a788fa] shadow-[var(--shadow-soft)] animate-float-delayed border border-[#ffe8f2]">
+            <div className="absolute right-8 top-24 z-10 rounded-[var(--radius-pill)] border border-[#eadcff] bg-white px-4 py-2 text-sm font-black text-[#7f5ce8] shadow-[var(--shadow-soft)] animate-float-delayed">
               bijoux
             </div>
-            <div className="absolute bottom-12 left-10 z-10 rounded-[var(--radius-pill)] bg-white px-4 py-2 text-sm font-bold text-[#ff7aae] shadow-[var(--shadow-soft)] animate-float-slow border border-[#ffe8f2]">
+            <div className="absolute left-[12%] bottom-[13%] z-10 rounded-[var(--radius-pill)] border border-[#ffe6c7] bg-white px-4 py-2 text-sm font-black text-[#ff914d] shadow-[var(--shadow-soft)] animate-float-slow">
               pink mood
             </div>
-            <div className="absolute bottom-14 right-12 z-10 rounded-[var(--radius-pill)] bg-white px-4 py-2 text-sm font-bold text-[#ffd6a5] shadow-[var(--shadow-soft)] animate-float-gentle border border-[#ffe8f2]">
-              cute
-            </div>
-
-            {/* Photo background */}
-            <div className="relative w-full h-full rounded-[var(--radius-xl)] overflow-hidden bg-[#fff7fb]">
+            <div className="relative z-[1] mx-auto h-full w-[88%] overflow-hidden rounded-[2.4rem] bg-[#fff0f8] shadow-[0_34px_85px_rgba(232,40,118,0.2)]">
               <Image
                 src="/images/classic-box.png"
                 alt="Classic Mystery Box"
                 fill
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
+                preload
+                loading="eager"
+                sizes="(max-width: 768px) 92vw, 46vw"
                 className="object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
+            <Sparkles className="absolute right-[12%] top-8 h-8 w-8 text-[#ffb34e] animate-sparkle" />
+            <Sparkles className="absolute left-[2%] top-[38%] h-7 w-7 text-[#c087ff] animate-sparkle" />
           </div>
         </div>
       </section>
 
-      <section className="container grid gap-6 py-12 relative" id="boxes">
+      <section className="container relative grid gap-6 py-8" id="boxes">
         <SectionIntro
           kicker="Choisis ta box"
-          title="Trois formats simples pour commander vite."
-          text="Sans paiement sur le site, sans checkout compliqué."
+          title="Trois formats simples."
+          text="Des box plus petites à l'écran, plus faciles à comparer."
         />
         <div className="grid gap-5 md:grid-cols-3">
           {categoryCards.map((category) => {
@@ -202,11 +184,10 @@ export function CandyHomePage() {
 
             return (
               <Link
-                className={`grid grid-cols-[1.1fr_0.9fr] gap-4 rounded-[var(--radius-lg)] border border-[#ffe8f2] bg-white p-5 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[var(--shadow-raised)] ${hoverBorderClass} overflow-hidden`}
+                className={`grid grid-cols-[1fr_0.82fr] gap-3 overflow-hidden rounded-[1.55rem] border border-[#ffe8f2] bg-white/90 p-4 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-raised)] ${hoverBorderClass}`}
                 href={category.href}
                 key={category.title}
               >
-                {/* Left column */}
                 <div className="flex flex-col justify-between gap-3">
                   <div className="grid gap-1">
                     {tagMap[category.title] && (
@@ -235,8 +216,7 @@ export function CandyHomePage() {
                   </div>
                 </div>
 
-                {/* Right column */}
-                <div className="relative aspect-[0.9] w-full overflow-hidden rounded-[var(--radius-md)] bg-[#fff7fb] self-center">
+                <div className="relative aspect-[0.92] w-full self-center overflow-hidden rounded-[1.25rem] bg-[#fff7fb]">
                   <Image
                     src={imageMap[category.title] || "/images/classic-box.png"}
                     alt={category.title}
@@ -251,15 +231,15 @@ export function CandyHomePage() {
         </div>
       </section>
 
-      <section className="container grid gap-6 py-12">
+      <section className="container grid gap-6 py-10">
         <SectionIntro
           kicker="Best sellers"
-          title="Ajoute une ou plusieurs box au panier."
+          title="Nos box à la une."
           text="Tu enverras ensuite une demande pour recevoir ton lien Vinted."
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {featured.map((product) => (
-            <CandyProductCard key={product.id} product={product} />
+            <CandyProductCard density="compact" key={product.id} product={product} />
           ))}
         </div>
       </section>

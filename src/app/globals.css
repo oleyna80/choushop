@@ -25,8 +25,8 @@
   --warning: #f59f5b;
   --success: #4bb889;
 
-  --font-display: var(--font-poppins), "Poppins", sans-serif;
-  --font-body: var(--font-poppins), "Poppins", sans-serif;
+  --font-display: var(--font-outfit), "Outfit", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
   --font-logo: var(--font-pacifico), cursive;
 
   --text-display: clamp(2.85rem, 7vw, 5.5rem);
@@ -329,6 +329,50 @@ p {
   animation: sparkle-pulse 2s ease-in-out infinite;
 }
 
+.candy-sparkle {
+  position: absolute;
+  display: none;
+  height: 1.35rem;
+  width: 1.35rem;
+  color: var(--primary);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.candy-sparkle::before,
+.candy-sparkle::after {
+  content: "";
+  position: absolute;
+  inset: 48% 0 auto;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.candy-sparkle::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.candy-sparkle-pink {
+  color: #ff7aae;
+}
+
+.candy-sparkle-lilac {
+  color: #a788fa;
+}
+
+.candy-sparkle-peach {
+  color: #ffb25d;
+}
+
+@media (min-width: 1024px) {
+  .candy-sparkle {
+    display: block;
+    animation: sparkle-pulse 2.8s ease-in-out infinite;
+  }
+}
+
 /* Background gradient blobs */
 .design-blob {
   position: absolute;
@@ -350,4 +394,3 @@ p {
 .design-blob-peach {
   background: radial-gradient(circle, var(--surface-peach) 0%, rgba(255,232,216,0.4) 100%);
 }
-
